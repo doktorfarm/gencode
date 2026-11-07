@@ -12,6 +12,7 @@
 import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode12';
 import { renderPedigreeSVG } from './pedigree.js?v=gencode13';
 import { analyzeClinicalCase } from './analyzer.js?v=gencode8';
+import { installRoles } from './roles.js?v=1';
 
 const LANG_STORAGE_KEY = 'gencode_lang_v1';
 const SESSION_STORAGE_KEY = 'gencode_session_v1';
@@ -21,6 +22,24 @@ const UI_TRANSLATIONS = {
   pl: {
     nav_lp: 'Strona główna',
     case_menu_label: 'Przypadek',
+    btn_share_patient: "Udostępnij pacjentowi",
+    empty_cl_kicker: "WORKSPACE KLINICYSTY",
+    empty_cl_title: "Dodaj przypadek do analizy",
+    empty_cl_text: "Wklej opis wywiadu lub wynik badania genetycznego — GenCode® przygotuje analizę, rodowód i raport dla pacjenta.",
+    empty_cl_btn: "+ Dodaj nowy przypadek",
+    empty_cl_note: "Przypadki zapisują się tylko w tej przeglądarce. Raport przekażesz pacjentowi przyciskiem „Udostępnij pacjentowi”.",
+    empty_pt_kicker: "STREFA PACJENTA",
+    empty_pt_title: "Otwórz swój raport",
+    empty_pt_text: "Wklej link do raportu otrzymany od lekarza albo wybierz plik raportu (.gencode.json).",
+    empty_pt_btn: "Otwórz raport",
+    empty_pt_file: "lub wybierz plik raportu",
+    empty_pt_note: "Raport ma charakter informacyjny i nie zastępuje rozmowy z lekarzem genetykiem.",
+    share_kicker: "RAPORT DLA PACJENTA",
+    share_title: "Udostępnij raport pacjentowi",
+    share_lead: "Pacjent zobaczy tylko raport w prostym języku, kartę informacyjną i rodowód — bez narzędzi klinicznych. Dane są zapisane w samym linku, nie na serwerze.",
+    share_download: "Pobierz plik raportu",
+    share_copy: "Kopiuj link",
+    share_note: "Wyślij link bezpośrednio pacjentowi (np. e-mailem). Każdy, kto ma link, może otworzyć raport.",
     lvl3_mol_kicker: 'DIAGNOSTYKA MOLEKULARNA • HGVS / ACMG / GRCh38',
     lvl3_sci_kicker: 'BAZY POPULACYJNE I STRUKTURA BIAŁKA 3D',
     tpl_nf1_short: 'Przypadek 1: NF1 (RASopatie)',
@@ -91,6 +110,24 @@ const UI_TRANSLATIONS = {
   en: {
     nav_lp: 'Home Page',
     case_menu_label: 'Case',
+    btn_share_patient: "Share with patient",
+    empty_cl_kicker: "CLINICIAN WORKSPACE",
+    empty_cl_title: "Add a case to analyse",
+    empty_cl_text: "Paste the family history or the genetic test result — GenCode® will prepare the analysis, pedigree and a patient report.",
+    empty_cl_btn: "+ Add new case",
+    empty_cl_note: "Cases are saved only in this browser. Send the report to the patient with “Share with patient”.",
+    empty_pt_kicker: "PATIENT AREA",
+    empty_pt_title: "Open your report",
+    empty_pt_text: "Paste the report link from your doctor or choose the report file (.gencode.json).",
+    empty_pt_btn: "Open report",
+    empty_pt_file: "or choose a report file",
+    empty_pt_note: "The report is for information only and does not replace a conversation with a clinical geneticist.",
+    share_kicker: "PATIENT REPORT",
+    share_title: "Share the report with the patient",
+    share_lead: "The patient sees only the plain-language report, the information sheet and the pedigree — no clinical tools. The data is stored in the link itself, not on a server.",
+    share_download: "Download report file",
+    share_copy: "Copy link",
+    share_note: "Send the link directly to the patient (e.g. by e-mail). Anyone with the link can open the report.",
     lvl3_mol_kicker: 'MOLECULAR DIAGNOSTICS • HGVS / ACMG / GRCh38',
     lvl3_sci_kicker: 'POPULATION DATA & 3D PROTEIN STRUCTURE',
     tpl_nf1_short: 'Case 1: NF1 (RASopathies)',
@@ -228,6 +265,11 @@ class ClinicalGeneticsWorkspace {
     }
 
     this.applyTranslations();
+    // Role entry (?role=clinician | ?role=patient): no demo case is preloaded
+    if (installRoles(this, { CASES_DATA })) {
+      this.setAudienceMode(this.audienceMode, false);
+      return;
+    }
     this.loadCase(CASES_DATA[initialCaseId], false);
     this.setAudienceMode(this.audienceMode, false);
 
@@ -631,7 +673,13 @@ class ClinicalGeneticsWorkspace {
     const rawText = textarea?.value?.trim() || '';
     const apiKey = apiKeyInput?.value?.trim() || '';
 
+    const errEl = document.getElementById('gc-case-error');
+    if (errEl) errEl.hidden = true;
     if (!rawText && !this.uploadedImageBase64) {
+      if (this.role) {
+        this.showCaseError?.(this.rolesText?.().needText);
+        return;
+      }
       this.closeCaseModal();
       this.loadCase(CASES_DATA[DEFAULT_CASE_ID], true);
       return;
@@ -650,9 +698,14 @@ class ClinicalGeneticsWorkspace {
         lang: this.lang
       });
       this.closeCaseModal();
-      this.loadCase(analyzedCase, true);
+      if (this.onCaseAnalyzed) this.onCaseAnalyzed(analyzedCase);
+      else this.loadCase(analyzedCase, true);
     } catch (err) {
       console.error('Case analysis fallback:', err);
+      if (this.role) {
+        this.showCaseError?.();
+        return;
+      }
       this.closeCaseModal();
       this.loadCase(CASES_DATA[DEFAULT_CASE_ID], true);
     } finally {

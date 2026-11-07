@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=gencode9" />
-  <link rel="stylesheet" href="./theme-landing.css?v=4" />
+  <link rel="stylesheet" href="./theme-landing.css?v=5" />
 </head>
 <body class="mydna-body" data-scroll-dir="down">
   <!-- Top Scroll Progress Bar -->
@@ -36,6 +36,7 @@
           <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="gcn1" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3B82F6"/><stop offset=".55" stop-color="#5B4BF0"/><stop offset="1" stop-color="#8B6BFF"/></linearGradient><radialGradient id="gcn2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#B8A6FF"/><stop offset="1" stop-color="#6A3DFF"/></radialGradient></defs><path d="M35 8C39.97 8 44 12.03 44 17C44 20.4 42.1 23.35 39.3 24.88C34.2 27.65 30.8 30.1 29.8 32.8C29.1 34.7 31.8 37.2 37.8 38.6C40.1 37.2 42.8 36.5 45.5 36.8C50.4 37.4 54.2 41.6 54 46.6C53.8 51.8 49.4 55.9 44.2 55.6C39.6 55.3 36 51.7 35.5 47.2C34.8 41.2 30.5 39.2 26.2 42.5L21.5 47.2C20.2 48.5 18.2 48.2 17.4 46.8C16.7 45.6 17.2 44.1 18.5 43.1L23.5 38.8C26.5 36.1 25.5 31.8 20.2 30.2C18.2 31.1 15.9 31.5 13.5 31.1C8.3 30.2 4.8 25.2 5.7 20C6.6 14.8 11.6 11.3 16.8 12.2C20.2 12.8 22.9 15.1 24.1 18.1C25.8 22.2 29.5 22.1 31.8 18.2C31.2 16.9 31 15.5 31.2 14C31.7 10.5 33.1 8 35 8Z" fill="url(#gcn1)"/><circle cx="12.5" cy="52.5" r="7.5" fill="url(#gcn2)"/></svg>
           <b>GenCode<sup>®</sup></b>
         </a>
+        <span class="gc-role-badge" id="gc-role-badge" hidden></span>
         <a href="./index.html" class="mydna-back-lp-pill" title="Powrót na stronę informacyjną GenCode®">
           <span>←</span>
           <span data-i18n="nav_lp">Strona główna</span>
@@ -86,6 +87,32 @@
          GENCODE GLASSMORPHIC MONITOR ON 3D PEDESTAL
          (Preserves Reference UX/UI Architecture, Adapted 100% to GenCode Genomics)
          ===================================================================== -->
+    <!-- Empty workspace (role entry without a case) -->
+    <section id="gc-empty" class="gc-empty" hidden>
+      <div class="gc-empty-card" data-for="clinician">
+        <span class="gc-empty-kicker" data-i18n="empty_cl_kicker">WORKSPACE KLINICYSTY</span>
+        <h2 data-i18n="empty_cl_title">Dodaj przypadek do analizy</h2>
+        <p data-i18n="empty_cl_text">Wklej opis wywiadu lub wynik badania genetycznego — GenCode® przygotuje analizę, rodowód i raport dla pacjenta.</p>
+        <div class="gc-empty-actions">
+          <button type="button" id="btn-empty-add" class="btn-accent-pill" data-i18n="empty_cl_btn">+ Dodaj nowy przypadek</button>
+        </div>
+        <div id="gc-my-cases-list" class="gc-my-cases"></div>
+        <p class="gc-empty-note" data-i18n="empty_cl_note">Przypadki zapisują się tylko w tej przeglądarce. Raport przekażesz pacjentowi przyciskiem „Udostępnij pacjentowi”.</p>
+      </div>
+      <div class="gc-empty-card" data-for="patient">
+        <span class="gc-empty-kicker" data-i18n="empty_pt_kicker">STREFA PACJENTA</span>
+        <h2 data-i18n="empty_pt_title">Otwórz swój raport</h2>
+        <p data-i18n="empty_pt_text">Wklej link do raportu otrzymany od lekarza albo wybierz plik raportu (.gencode.json).</p>
+        <div class="gc-share-open">
+          <input id="gc-share-input" type="text" inputmode="url" autocomplete="off" placeholder="https://…?role=patient#r=…" aria-label="Link do raportu">
+          <button type="button" id="btn-open-shared" class="btn-accent-pill" data-i18n="empty_pt_btn">Otwórz raport</button>
+        </div>
+        <label class="gc-file-btn"><input id="gc-share-file" type="file" accept=".json,application/json" hidden><span data-i18n="empty_pt_file">lub wybierz plik raportu</span></label>
+        <p id="gc-share-error" class="gc-case-error" role="alert" hidden></p>
+        <p class="gc-empty-note" data-i18n="empty_pt_note">Raport ma charakter informacyjny i nie zastępuje rozmowy z lekarzem genetykiem.</p>
+      </div>
+    </section>
+
     <section id="overview-pedestal-section" class="mydna-pedestal-stage" aria-label="GenCode Genomic Telemetry Monitor">
       <div class="mydna-glass-bezel">
         <div class="mydna-glass-screen">
@@ -637,6 +664,9 @@
                 👤 <span data-i18n="tab_patient">Widok dla Pacjenta</span>
               </button>
             </div>
+            <button id="btn-share-patient" class="btn-outline-pill" type="button" title="Wyślij pacjentowi link do raportu">
+              🔗 <span data-i18n="btn_share_patient">Udostępnij pacjentowi</span>
+            </button>
             <button id="btn-print-report" class="btn-outline-pill" type="button" title="Drukuj lub zapisz PDF">
               🖨️ <span data-i18n="btn_print">Drukuj / PDF</span>
             </button>
@@ -958,9 +988,9 @@
         <button id="btn-close-case-modal" class="modal-close" type="button" aria-label="Zamknij">✕</button>
       </div>
 
-      <div style="margin-bottom: 16px; padding: 12px 14px; border-radius: 12px; background: var(--bg-canvas); border: 1px solid var(--border-hairline);">
+      <div class="gc-demo-pills" style="margin-bottom: 16px; padding: 12px 14px; border-radius: 12px; background: var(--bg-canvas); border: 1px solid var(--border-hairline);">
         <div style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px;">
-          Zwalidowane referencyjne przypadki kliniczne:
+          Przypadki przykładowe (demo):
         </div>
         <div style="display: flex; gap: 8px; flex-wrap: wrap;">
           <button type="button" class="quick-case-pill" data-load-case="nf1">
@@ -1005,6 +1035,7 @@
 
       <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:18px; padding-top:14px; border-top:1px solid var(--border-hairline);">
         <button id="btn-cancel-case-modal" type="button" class="btn-outline-pill">Anuluj</button>
+        <p id="gc-case-error" class="gc-case-error" role="alert" hidden></p>
         <button id="btn-run-case-analysis" type="button" class="btn-accent-pill">
           <span id="btn-run-case-label">Uruchom analizę i wygeneruj raport</span>
           <span class="arrow-circle">→</span>
@@ -1024,6 +1055,28 @@
   </button>
 
   <script src="./js/ui-enhancements.js?v=4" defer></script>
-  <script type="module" src="./js/app.js?v=gencode13"></script>
+  <script type="module" src="./js/app.js?v=gencode14"></script>
+  <!-- Share report with patient -->
+  <div id="share-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
+    <div class="modal-dialog gc-share-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="section-eyebrow" style="margin-bottom:6px;" data-i18n="share_kicker">RAPORT DLA PACJENTA</span>
+          <h3 id="share-modal-title" data-i18n="share_title">Udostępnij raport pacjentowi</h3>
+        </div>
+        <button class="modal-close" type="button" data-close-share aria-label="Zamknij">✕</button>
+      </div>
+      <p class="gc-share-lead" data-i18n="share_lead">Pacjent zobaczy tylko raport w prostym języku, kartę informacyjną i rodowód — bez narzędzi klinicznych. Dane są zapisane w samym linku, nie na serwerze.</p>
+      <textarea id="share-link" class="form-textarea gc-share-link" readonly rows="3"></textarea>
+      <div class="gc-share-row">
+        <small id="share-size" class="gc-share-size"></small>
+        <div class="gc-share-btns">
+          <a id="share-download" class="btn-outline-pill" href="#" data-i18n="share_download">Pobierz plik raportu</a>
+          <button id="share-copy" type="button" class="btn-accent-pill" data-i18n="share_copy">Kopiuj link</button>
+        </div>
+      </div>
+      <p class="gc-empty-note" data-i18n="share_note">Wyślij link bezpośrednio pacjentowi (np. e-mailem). Każdy, kto ma link, może otworzyć raport.</p>
+    </div>
+  </div>
 </body>
 </html>

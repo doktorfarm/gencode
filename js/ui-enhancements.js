@@ -23,7 +23,8 @@
     const sync = () => {
       const active = menu.querySelector('.mydna-case-chip.active') || menu.querySelector('.mydna-case-chip');
       if (!active) return;
-      const label = active.querySelector('[data-i18n]') || active;
+      const spans = active.querySelectorAll('span');
+      const label = active.querySelector('[data-i18n]') || spans[spans.length - 1] || active;
       const txt = label.textContent.trim();
       if (cur.textContent !== txt) cur.textContent = txt;
     };

@@ -116,7 +116,7 @@ function analyzeOfflineGeneralGenetics({ text }) {
   const geneMatch = input.match(/\b(BRCA1|BRCA2|CFTR|SMN1|PAH|FBN1|MYH7|MLH1|MSH2|MSH6|PMS2|TP53|APC|HTT|DMD|FMR1|COL1A1|NF1|TSC1|TSC2|RET|LDLR|HBB|GJB2|MECP2)\b/i);
   const karyotypeMatch = input.match(/\b(4[567],[X|Y]{2}[,a-zA-Z0-9();+-]*|der\([0-9;]+\)|t\([0-9;]+\)|trisom|monosom|translokacj)/i);
   const hgvsCMatch = input.match(/c\.[0-9_+*-]+[A-Za-z>?]+/i);
-  const hgvsPMatch = input.match(/p\.\(?[A-Za-z0-9_*]+\)?/i);
+  const hgvsPMatch = input.match(/p\.(\([A-Za-z0-9_*]+\)|[A-Za-z0-9_*]+)/i);
   const isSomaticMentioned = /guz|fragment|somatycz|tumor|tissue/i.test(input);
   const isRecessive = /recesyw|CFTR|mukowiscydoz|SMN1|SMA|fenyloketonuri|PAH|GJB2|HBB/i.test(input);
   const isXLinked = /DMD|Duchenne|FMR1|łamliwego X|hemofili|sprzężon/i.test(input);

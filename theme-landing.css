@@ -532,3 +532,80 @@ body.mydna-body .gc-prov-status.is-pending { color: #B45309; }
 .gc-pcard.is-collapsed .pcard-body::after { content: ""; position: absolute; inset: auto 0 0 0; height: 120px; background: linear-gradient(180deg, rgba(255,255,255,0), #fff); }
 .gc-pcard.is-collapsed .pcard-footer { display: none; }
 @media print { body.gc-print-pcard .gc-pcard .pcard-body { max-height: none !important; overflow: visible !important; } body.gc-print-pcard .gc-pcard .pcard-body::after { display: none !important; } body.gc-print-pcard .pcard-actions { display: none !important; } }
+
+/* =====================================================================
+   v5 — Role entry: clinician / patient, empty workspace, sharing
+   ===================================================================== */
+.gc-role-badge { display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 999px; font-size: 11.5px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: #6A3DFF; color: #fff; margin-right: 4px; }
+body[data-role="patient"] .gc-role-badge { background: #10B981; }
+
+/* No case loaded → only the empty state */
+body.mydna-body.gc-no-case #overview-pedestal-section,
+body.mydna-body.gc-no-case .studio-card { display: none !important; }
+.gc-empty { max-width: 760px; margin: 40px auto 80px; }
+.gc-empty[hidden] { display: none; }
+.gc-empty-card { display: none; background: #fff; border: 1px solid var(--border-subtle); border-radius: 24px; padding: 40px; box-shadow: var(--shadow-frame); text-align: center; }
+body[data-role="clinician"] .gc-empty-card[data-for="clinician"],
+body[data-role="patient"] .gc-empty-card[data-for="patient"] { display: block; }
+.gc-empty-kicker { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; color: #6A3DFF; background: #EDEBFF; padding: 5px 12px; border-radius: 999px; }
+.gc-empty-card h2 { font-size: clamp(26px, 3.4vw, 36px); font-weight: 700; letter-spacing: -.035em; color: var(--gc-ink); margin: 16px 0 10px; }
+.gc-empty-card > p { color: var(--text-muted); font-size: 1rem; max-width: 560px; margin: 0 auto; }
+.gc-empty-actions { margin: 26px 0 8px; display: flex; justify-content: center; }
+.gc-empty-actions .btn-accent-pill { padding: 14px 26px; font-size: .95rem; }
+.gc-empty-note { margin-top: 22px; font-size: .82rem; color: var(--text-muted); }
+.gc-my-cases { text-align: left; margin-top: 26px; }
+.gc-my-cases:empty { display: none; }
+.gc-my-cases h4 { font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--text-muted); margin-bottom: 10px; }
+.gc-my-case { display: flex; gap: 8px; align-items: stretch; margin-bottom: 8px; }
+.gc-my-open { flex: 1; text-align: left; background: #F7F6FD; border: 1px solid var(--border-subtle); border-radius: 14px; padding: 12px 14px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; transition: border-color .2s; }
+.gc-my-open:hover { border-color: #CDC4FF; }
+.gc-my-open b { font-size: .92rem; color: var(--gc-ink); }
+.gc-my-open small { font-size: .78rem; color: var(--text-muted); }
+.gc-my-del { background: none; border: 1px solid var(--border-subtle); border-radius: 12px; padding: 0 12px; color: var(--text-muted); font-size: .8rem; cursor: pointer; }
+.gc-my-del:hover { color: #DC2626; border-color: #FCA5A5; }
+.gc-menu-empty { padding: 12px; font-size: 13px; color: var(--text-muted); }
+.gc-share-open { display: flex; gap: 8px; margin: 26px 0 10px; }
+.gc-share-open input { flex: 1; min-width: 0; height: 48px; padding: 0 16px; border-radius: 999px; border: 1px solid var(--border-subtle); background: #F7F6FD; font: inherit; font-size: .9rem; }
+.gc-share-open input:focus { outline: none; border-color: #6A3DFF; box-shadow: 0 0 0 4px rgba(106,61,255,.12); }
+.gc-file-btn { display: inline-block; font-size: .88rem; color: #6A3DFF; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+.gc-case-error { margin: 12px 0 0; color: #B91C1C; font-size: .86rem; font-weight: 500; }
+.gc-case-error[hidden] { display: none; }
+#gc-case-error { margin: 0 auto 0 0; align-self: center; }
+
+/* Share dialog */
+.gc-share-dialog { max-width: 620px; }
+.gc-share-lead { font-size: .9rem; color: var(--text-secondary); margin-bottom: 14px; line-height: 1.55; }
+.gc-share-link { font-family: var(--font-mono); font-size: .76rem; word-break: break-all; min-height: 84px; }
+.gc-share-row { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+.gc-share-btns { display: flex; gap: 8px; flex-wrap: wrap; }
+.gc-share-size { color: var(--text-muted); font-size: .78rem; }
+
+/* Role entry: no demo shortcuts */
+body[data-role] .gc-demo-pills { display: none !important; }
+
+/* Patient role: report only — no clinical tooling */
+body[data-role="patient"] #overview-pedestal-section,
+body[data-role="patient"] .gc-case-menu,
+body[data-role="patient"] #btn-open-case-modal,
+body[data-role="patient"] #btn-change-case,
+body[data-role="patient"] #btn-share-patient,
+body[data-role="patient"] .audience-toggle-group,
+body[data-role="patient"] .gc-breadcrumbs,
+body[data-role="patient"] #level2-disclosure-bar,
+body[data-role="patient"] #level2-section,
+body[data-role="patient"] #level3-disclosure-bar,
+body[data-role="patient"] #level3-section,
+body[data-role="patient"] #integrity-grid,
+body[data-role="patient"] .gc-level-banner,
+body[data-role="patient"] #active-domain-badge,
+body[data-role="patient"] .scroll-up-fab { display: none !important; }
+body[data-role="patient"] #btn-toggle-pcard { display: none; }
+body[data-role="patient"] .gc-pcard.is-collapsed .pcard-body { max-height: none; }
+body[data-role="patient"] .gc-pcard.is-collapsed .pcard-body::after { display: none; }
+@media (max-width: 760px) {
+  .gc-empty { margin: 20px auto 40px; }
+  .gc-empty-card { padding: 28px 20px; }
+  .gc-share-open { flex-direction: column; }
+  .gc-share-open .btn-accent-pill { justify-content: center; }
+}
+body[data-role="patient"] #active-case-subtitle { display: none; }
