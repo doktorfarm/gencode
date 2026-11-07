@@ -1,0 +1,534 @@
+/* =====================================================================
+   GenCode® — Landing Theme for the Workspace (index.html)
+   Loaded AFTER styles.css. Aligns the dashboard with landing-v2.html:
+   ink #0B1226 · violet #6A3DFF · blue #3B82F6 · lilac #EDEBFF · Inter
+   Remove the <link> to this file to restore the previous look.
+   ===================================================================== */
+
+:root {
+  --brand-primary: #6A3DFF;
+  --brand-primary-light: #EDEBFF;
+  --brand-secondary: #5B4BF0;
+  --brand-accent: #3B82F6;
+  --brand-accent-light: #EAF2FF;
+  --brand-dark: #0B1226;
+  --brand-surface: #FAFAFE;
+
+  --brand-gradient: linear-gradient(135deg, #6A3DFF 0%, #3B82F6 100%);
+  --brand-gradient-soft: linear-gradient(135deg, rgba(106, 61, 255, 0.08) 0%, rgba(59, 130, 246, 0.08) 100%);
+
+  --bg-outer: #FAFAFE;
+  --bg-canvas: #FAFAFE;
+  --bg-card: #FFFFFF;
+  --bg-card-subtle: #F7F6FD;
+
+  --text-primary: #0B1226;
+  --text-secondary: #3D4463;
+  --text-muted: #5B6280;
+
+  --border-hairline: #ECEAF5;
+  --border-subtle: #E6E4F2;
+  --shadow-card: 0 1px 2px rgba(11, 18, 38, 0.04), 0 8px 24px -8px rgba(11, 18, 38, 0.10);
+  --shadow-card-hover: 0 20px 50px -20px rgba(42, 20, 140, 0.28);
+  --shadow-frame: 0 1px 2px rgba(11, 18, 38, 0.04), 0 24px 60px -24px rgba(42, 20, 140, 0.22);
+  --shadow-pill: 0 10px 30px -10px rgba(106, 61, 255, 0.6);
+
+  --font-display: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  --radius-frame: 24px;
+  --radius-card: 20px;
+
+  --gc-ink: #0B1226;
+  --gc-ink-2: #151d3a;
+  --gc-line-dark: rgba(255, 255, 255, 0.09);
+  --gc-muted-dark: #A3A9C7;
+}
+
+/* ---------- Canvas ---------- */
+html { background: #FAFAFE; }
+body.mydna-body {
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  background:
+    radial-gradient(60% 40% at 80% -5%, rgba(106, 61, 255, 0.10), transparent 70%),
+    radial-gradient(40% 30% at 0% 10%, rgba(59, 130, 246, 0.07), transparent 70%),
+    #FAFAFE;
+  background-attachment: fixed;
+}
+body.mydna-body .mydna-studio-backdrop { display: none; }
+body.mydna-body h1, body.mydna-body h2, body.mydna-body h3, body.mydna-body h4 {
+  font-family: var(--font-display);
+  letter-spacing: -0.025em;
+}
+
+/* ---------- Top bar → dark glass nav (like the landing) ---------- */
+body.mydna-body .mydna-page-wrapper { padding-top: 12px; }
+body.mydna-body .mydna-utility-bar {
+  position: sticky;
+  top: 12px;
+  z-index: 40;
+  background: rgba(11, 18, 38, 0.86);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border: 1px solid var(--gc-line-dark);
+  border-radius: 18px;
+  padding: 10px 12px 10px 16px;
+  box-shadow: 0 20px 50px -24px rgba(11, 18, 38, 0.55);
+  margin-bottom: 22px;
+}
+body.mydna-body .gc-nav-logo {
+  display: inline-flex; align-items: center; gap: 9px;
+  color: #FFFFFF; text-decoration: none; margin-right: 6px;
+}
+body.mydna-body .gc-nav-logo svg { width: 28px; height: 28px; }
+body.mydna-body .gc-nav-logo b { font-weight: 700; font-size: 16.5px; letter-spacing: -0.02em; }
+body.mydna-body .gc-nav-logo sup { font-size: 8px; opacity: 0.7; }
+body.mydna-body .gc-nav-logo + .mydna-back-lp-pill { margin-left: 4px; }
+
+body.mydna-body .mydna-back-lp-pill {
+  color: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: none;
+  font-weight: 600;
+}
+body.mydna-body .mydna-back-lp-pill:hover {
+  background: rgba(255, 255, 255, 0.12); color: #FFFFFF; border-color: rgba(255, 255, 255, 0.24);
+}
+body.mydna-body .gc-breadcrumbs {
+  background: transparent; border: 0; color: rgba(255, 255, 255, 0.5);
+}
+body.mydna-body .gc-bc-active { color: #FFFFFF; }
+
+body.mydna-body .mydna-case-chip {
+  color: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  font-weight: 600;
+}
+body.mydna-body .mydna-case-chip:hover { background: rgba(255, 255, 255, 0.10); color: #FFFFFF; }
+body.mydna-body .mydna-case-chip.active {
+  background: #FFFFFF; color: var(--gc-ink); border-color: #FFFFFF; box-shadow: none;
+}
+body.mydna-body .mydna-utility-bar .lang-switch {
+  background: rgba(255, 255, 255, 0.06); border-color: rgba(255, 255, 255, 0.12);
+}
+body.mydna-body .mydna-utility-bar .lang-btn { color: rgba(255, 255, 255, 0.65); }
+body.mydna-body .mydna-utility-bar .lang-btn.active { background: #FFFFFF; color: var(--gc-ink); }
+
+/* ---------- Buttons ---------- */
+body.mydna-body .btn-accent-pill {
+  background: #6A3DFF;
+  box-shadow: 0 10px 30px -10px rgba(106, 61, 255, 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-weight: 600;
+}
+body.mydna-body .btn-accent-pill:hover {
+  background: #5a2ff0; filter: none;
+  box-shadow: 0 14px 34px -10px rgba(106, 61, 255, 0.85);
+}
+body.mydna-body .btn-outline-pill { border-color: var(--border-subtle); }
+body.mydna-body .btn-outline-pill:hover { border-color: #CFC8F5; }
+
+/* ---------- Overview: flatten pedestal into a clean product card ---------- */
+body.mydna-body .mydna-pedestal-base { display: none; }
+body.mydna-body .mydna-pedestal-stage { margin-bottom: 24px; }
+body.mydna-body .mydna-glass-bezel {
+  max-width: none; padding: 0; background: none; border: 0;
+  box-shadow: none; backdrop-filter: none; -webkit-backdrop-filter: none;
+}
+body.mydna-body .mydna-glass-screen {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  box-shadow: var(--shadow-frame);
+}
+
+/* Sidebar rail → ink capsule with violet active state */
+body.mydna-body .mydna-sidebar {
+  background: var(--gc-ink);
+  border-radius: 22px;
+  padding: 14px 0;
+  box-shadow: 0 20px 40px -20px rgba(11, 18, 38, 0.6);
+}
+body.mydna-body .mydna-capsule-logo { filter: none; }
+body.mydna-body .mydna-rail-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #8A92B4;
+  box-shadow: none;
+}
+body.mydna-body .mydna-rail-btn:hover {
+  color: #FFFFFF; background: rgba(255, 255, 255, 0.10); box-shadow: none;
+}
+body.mydna-body .mydna-rail-btn.active {
+  background: #6A3DFF; color: #FFFFFF; border-color: transparent;
+  box-shadow: 0 8px 22px -6px rgba(106, 61, 255, 0.8);
+}
+body.mydna-body .mydna-rail-btn[data-rail-label]::after { background: #FFFFFF; color: var(--gc-ink); box-shadow: var(--shadow-card); }
+body.mydna-body .mydna-avatar-img {
+  background: linear-gradient(135deg, #6A3DFF 0%, #3B82F6 100%) !important;
+  font-family: var(--font-sans) !important;
+}
+
+/* Header inside the overview card */
+body.mydna-body .mydna-greeting h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--gc-ink);
+}
+body.mydna-body .gc-sample-pill { background: var(--gc-ink); color: #FFFFFF; border-color: var(--gc-ink); }
+body.mydna-body .mydna-search-box {
+  background: #F7F6FD; border: 1px solid var(--border-subtle); box-shadow: none;
+}
+body.mydna-body .mydna-search-box:focus-within { border-color: #6A3DFF; box-shadow: 0 0 0 4px rgba(106, 61, 255, 0.12); }
+body.mydna-body .mydna-bell-btn { background: #F7F6FD; border: 1px solid var(--border-subtle); }
+
+/* Priority action banner → violet/blue like the landing CTA */
+body.mydna-body .mydna-relax-banner {
+  background:
+    radial-gradient(60% 90% at 100% 100%, rgba(59, 130, 246, 0.55), transparent 70%),
+    radial-gradient(50% 80% at 0% 0%, rgba(139, 107, 255, 0.55), transparent 70%),
+    linear-gradient(120deg, #4B23D9 0%, #6A3DFF 50%, #3B82F6 100%);
+  border-radius: 20px;
+  box-shadow: 0 24px 50px -24px rgba(106, 61, 255, 0.7);
+}
+body.mydna-body .mydna-relax-btn { border-radius: 999px; color: var(--gc-ink); }
+
+/* Compact the nav: logo already says GenCode®, drop the duplicate crumb */
+body.mydna-body .gc-breadcrumbs > .gc-bc-item:first-child,
+body.mydna-body .gc-breadcrumbs > .gc-bc-sep:nth-child(2) { display: none; }
+
+/* Vital / stat cards */
+body.mydna-body .mydna-vital-card {
+  background: #FFFFFF;
+  border: 1px solid var(--border-subtle);
+  box-shadow: none;
+}
+body.mydna-body .mydna-vital-card:hover {
+  border-color: #CDC4FF;
+  box-shadow: 0 20px 50px -24px rgba(106, 61, 255, 0.4);
+}
+body.mydna-body .mydna-vital-card-elevated {
+  background: var(--gc-ink); border-color: var(--gc-ink);
+  box-shadow: 0 20px 40px -20px rgba(11, 18, 38, 0.55);
+}
+body.mydna-body .mydna-vital-card-elevated,
+body.mydna-body .mydna-vital-card-elevated * { color: #FFFFFF; }
+body.mydna-body .mydna-vital-card-elevated .mydna-vital-badge,
+body.mydna-body .mydna-vital-card-elevated .mydna-vital-badge * { color: var(--gc-ink); }
+body.mydna-body .mydna-vital-card-elevated .mydna-vital-icon { background: rgba(106, 61, 255, 0.25); }
+body.mydna-body .mydna-vital-card-elevated .mydna-sparkline path { stroke: #B8A6FF; }
+
+/* ---------- Main workspace ---------- */
+body.mydna-body .studio-card { background: transparent; border: 0; box-shadow: none; }
+body.mydna-body .dashboard-section { padding: 8px 0 46px; }
+
+body.mydna-body .bento-card,
+body.mydna-body .audience-bar,
+body.mydna-body .patient-report-card {
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  box-shadow: var(--shadow-card);
+}
+body.mydna-body .audience-bar { padding: 24px 28px; }
+body.mydna-body .audience-bar::before { width: 4px; background: var(--brand-gradient); }
+body.mydna-body .audience-bar-info h2 { font-weight: 700; letter-spacing: -0.03em; }
+
+/* Progressive-disclosure banners → dark CTA bands like the landing */
+body.mydna-body .extend-pro-banner {
+  position: relative; overflow: hidden; isolation: isolate;
+  background: var(--gc-ink);
+  border: 1px solid var(--gc-ink);
+  border-radius: 24px;
+  color: #FFFFFF;
+  box-shadow: 0 30px 60px -30px rgba(42, 20, 140, 0.55);
+}
+body.mydna-body .extend-pro-banner::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(50% 120% at 100% 100%, rgba(106, 61, 255, 0.45), transparent 70%),
+    radial-gradient(30% 80% at 0% 0%, rgba(59, 130, 246, 0.25), transparent 70%);
+}
+body.mydna-body .extend-pro-banner {
+  --text-primary: #FFFFFF;
+  --text-secondary: #A3A9C7;
+  --brand-dark: #FFFFFF;
+}
+body.mydna-body .extend-pro-banner .pro-pill {
+  background: rgba(106, 61, 255, 0.25); color: #D9D2FF; border-color: rgba(106, 61, 255, 0.45);
+}
+body.mydna-body .extend-pro-banner h3,
+body.mydna-body .extend-pro-banner h4,
+body.mydna-body .extend-pro-banner strong { color: #FFFFFF; }
+body.mydna-body .extend-pro-banner p { color: var(--gc-muted-dark); }
+
+/* Scroll FAB */
+body.mydna-body .scroll-up-fab {
+  background: rgba(11, 18, 38, 0.9); color: #FFFFFF;
+  border: 1px solid var(--gc-line-dark);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+}
+
+/* Modal */
+body.mydna-body .modal-backdrop { background: rgba(11, 18, 38, 0.55); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+body.mydna-body .modal-dialog { border-radius: 24px; border: 1px solid var(--border-subtle); }
+
+/* ---------- Responsive ---------- */
+@media (max-width: 680px) {
+  body.mydna-body .mydna-utility-bar { top: 8px; border-radius: 16px; padding: 10px; }
+  body.mydna-body .gc-nav-logo b { display: none; }
+  body.mydna-body .mydna-sidebar { padding: 8px 12px; border-radius: 18px; }
+  body.mydna-body .audience-bar { padding: 20px; }
+  body.mydna-body .mydna-page-wrapper { padding-left: 12px; padding-right: 12px; }
+  body.mydna-body .mydna-glass-screen { padding: 14px; min-width: 0; }
+  body.mydna-body .mydna-glass-screen *,
+  body.mydna-body .mydna-glass-screen { max-width: 100%; }
+  body.mydna-body .mydna-main-area,
+  body.mydna-body .mydna-bento-stage,
+  body.mydna-body .mydna-left-col,
+  body.mydna-body .mydna-vitals-row,
+  body.mydna-body .mydna-vital-card { min-width: 0; }
+  body.mydna-body .mydna-sidebar { overflow-x: auto; justify-content: flex-start; gap: 8px; }
+  body.mydna-body .mydna-sidebar > * { flex: none; }
+  body.mydna-body .mydna-capsule-logo { display: none; }
+  body.mydna-body .extend-pro-banner { flex-direction: column; align-items: flex-start; padding: 20px; }
+  body.mydna-body .extend-pro-text { flex-direction: column; align-items: flex-start; gap: 10px; min-width: 0; }
+  body.mydna-body .extend-pro-text .pro-pill { white-space: normal; }
+  body.mydna-body .audience-toggle-group { flex-wrap: wrap; max-width: 100%; }
+}
+
+/* =====================================================================
+   v2 — navigation, overview viz, report header, table, readability
+   ===================================================================== */
+
+/* ---------- Single-row nav ---------- */
+body.mydna-body .mydna-utility-bar { flex-wrap: nowrap; }
+body.mydna-body .mydna-util-left,
+body.mydna-body .mydna-util-right { flex-wrap: nowrap; min-width: 0; }
+body.mydna-body .mydna-util-left { flex: 1 1 auto; }
+body.mydna-body .gc-breadcrumbs { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
+/* active case now lives in the case menu */
+body.mydna-body #bc-active-case,
+body.mydna-body #bc-active-case + .gc-bc-sep,
+body.mydna-body .gc-breadcrumbs > .gc-bc-sep:nth-child(4) { display: none; }
+
+/* ---------- Case menu ---------- */
+.gc-case-menu { position: relative; }
+.gc-case-menu > summary {
+  list-style: none; cursor: pointer; user-select: none;
+  display: inline-flex; align-items: center; gap: 8px;
+  height: 34px; padding: 0 12px 0 14px; border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.14);
+  color: #FFFFFF; font-size: 13px; font-weight: 600; white-space: nowrap;
+  transition: background .2s, border-color .2s;
+}
+.gc-case-menu > summary::-webkit-details-marker { display: none; }
+.gc-case-menu > summary:hover { background: rgba(255, 255, 255, 0.12); }
+.gc-case-menu-k { color: rgba(255, 255, 255, 0.55); font-weight: 500; }
+.gc-case-menu-cur { max-width: 220px; overflow: hidden; text-overflow: ellipsis; }
+.gc-case-menu > summary svg { opacity: .7; transition: transform .2s; }
+.gc-case-menu[open] > summary svg { transform: rotate(180deg); }
+.gc-case-menu[open] > summary { background: rgba(255, 255, 255, 0.14); }
+body.mydna-body .gc-case-menu .mydna-quick-case-strip {
+  position: absolute; top: calc(100% + 8px); right: 0; z-index: 60;
+  flex-direction: column; align-items: stretch; gap: 4px; flex-wrap: nowrap;
+  min-width: 280px; padding: 6px; border-radius: 16px;
+  background: #FFFFFF; border: 1px solid var(--border-subtle);
+  box-shadow: 0 24px 60px -20px rgba(11, 18, 38, 0.45);
+  animation: gcMenuIn .16s ease;
+}
+@keyframes gcMenuIn { from { opacity: 0; transform: translateY(-4px); } }
+body.mydna-body .gc-case-menu .mydna-case-chip {
+  justify-content: flex-start; width: 100%;
+  background: transparent; border: 0; color: var(--gc-ink);
+  border-radius: 10px; padding: 10px 12px; font-size: 13.5px; font-weight: 500;
+}
+body.mydna-body .gc-case-menu .mydna-case-chip:hover { background: #F3F2FA; color: var(--gc-ink); }
+body.mydna-body .gc-case-menu .mydna-case-chip.active { background: var(--brand-primary-light); color: #4B23D9; font-weight: 600; box-shadow: none; }
+body.mydna-body .gc-case-menu .mydna-case-chip.active::after { content: "✓"; margin-left: auto; font-weight: 700; }
+
+/* ---------- Overview viz (replaces decorative sparklines) ---------- */
+body.mydna-body .gc-viz { flex: 1; min-width: 0; margin-right: 12px; align-self: flex-end; }
+.gc-viz-seg { display: flex; gap: 4px; }
+.gc-viz-seg i { flex: 1; height: 7px; border-radius: 4px; background: #ECEAF6; }
+.gc-viz-seg i.on { background: #6A3DFF; }
+.gc-viz-seg i.on.danger { background: linear-gradient(90deg, #ef4444, #dc2626); }
+.gc-viz-l { display: flex; justify-content: space-between; gap: 4px; margin-top: 6px; font-size: 11px; line-height: 1.2; color: var(--text-muted); white-space: nowrap; }
+.gc-viz-range { position: relative; height: 8px; border-radius: 4px; background: #ECEAF6; overflow: hidden; }
+.gc-viz-range .fill { position: absolute; inset: 0 auto 0 0; background: #6A3DFF; }
+.gc-viz-range .band { position: absolute; top: 0; bottom: 0; background: repeating-linear-gradient(45deg, #6A3DFF 0 3px, #B8A6FF 3px 6px); }
+.gc-viz-zones { position: relative; display: flex; height: 8px; border-radius: 4px; overflow: visible; }
+.gc-viz-zones span { height: 100%; background: #ECEAF6; }
+.gc-viz-zones span:first-child { border-radius: 4px 0 0 4px; }
+.gc-viz-zones span:nth-child(2) { background: #DCD5FB; }
+.gc-viz-zones span.hi { background: #B8A6FF; border-radius: 0 4px 4px 0; }
+.gc-viz-zones b { position: absolute; top: -4px; width: 3px; height: 16px; margin-left: -1.5px; border-radius: 2px; background: #0B1226; }
+/* on the dark (elevated) card */
+body.mydna-body .mydna-vital-card-elevated .gc-viz-seg i,
+body.mydna-body .mydna-vital-card-elevated .gc-viz-range,
+body.mydna-body .mydna-vital-card-elevated .gc-viz-zones span { background: rgba(255, 255, 255, 0.12); }
+body.mydna-body .mydna-vital-card-elevated .gc-viz-seg i.on { background: #8B6BFF; }
+body.mydna-body .mydna-vital-card-elevated .gc-viz-seg i.on.danger { background: linear-gradient(90deg, #f87171, #ef4444); }
+body.mydna-body .mydna-vital-card-elevated .gc-viz-l { color: #A3A9C7; }
+
+/* ---------- Report header: no duplicated case title ---------- */
+body.mydna-body #active-case-title { display: none; }
+body.mydna-body .gc-report-heading { margin-top: 10px; font-size: 1.32rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gc-ink); }
+
+/* ---------- Integrity cards: badge alone, no English duplicate ---------- */
+body.mydna-body .gc-int-header { justify-content: flex-start; }
+
+/* ---------- Recommendation table ---------- */
+body.mydna-body .diagnostic-table { font-size: 0.86rem; }
+body.mydna-body .diagnostic-table th { font-size: 0.72rem; font-weight: 700; color: var(--text-muted); background: #F7F6FD; }
+body.mydna-body .diagnostic-table tr:hover td { background: #F7F6FD; }
+@media (min-width: 900px) {
+  body.mydna-body .table-responsive { overflow: visible; }
+  body.mydna-body .diagnostic-table thead th {
+    position: sticky; top: 84px; z-index: 5;
+    box-shadow: 0 1px 0 var(--border-subtle);
+  }
+}
+@media (max-width: 899px) {
+  body.mydna-body .table-responsive { overflow: visible; }
+  body.mydna-body .diagnostic-table,
+  body.mydna-body .diagnostic-table tbody,
+  body.mydna-body .diagnostic-table tr,
+  body.mydna-body .diagnostic-table td { display: block; width: 100%; }
+  body.mydna-body .diagnostic-table thead { display: none; }
+  body.mydna-body .diagnostic-table tr {
+    margin-bottom: 12px; padding: 14px 16px; border: 1px solid var(--border-subtle);
+    border-radius: 16px; background: #FFFFFF; box-shadow: var(--shadow-card);
+  }
+  body.mydna-body .diagnostic-table td { padding: 8px 0; border: 0; border-top: 1px solid var(--border-hairline); }
+  body.mydna-body .diagnostic-table td:first-child { border-top: 0; padding-top: 0; color: var(--gc-ink); font-size: 1rem; }
+  body.mydna-body .diagnostic-table td[data-label]:not(:first-child)::before {
+    content: attr(data-label); display: block; margin-bottom: 3px;
+    font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--text-muted);
+  }
+  body.mydna-body .diagnostic-table tr:hover td { background: transparent; }
+}
+
+/* ---------- Readability: minimum text sizes & contrast ---------- */
+body.mydna-body .mydna-relax-text p { font-size: 0.8rem; line-height: 1.5; color: rgba(255, 255, 255, 0.9); }
+body.mydna-body .mydna-relax-text { max-width: 440px !important; }
+body.mydna-body .mydna-relax-btn { font-size: 0.8rem; }
+body.mydna-body .mydna-vital-head span,
+body.mydna-body .mydna-vital-badge small { font-size: 0.75rem; }
+body.mydna-body .mydna-vital-badge small { color: var(--text-muted); }
+body.mydna-body .gc-level-note,
+body.mydna-body .gc-level-pill { font-size: 0.75rem; }
+body.mydna-body .badge { font-size: 0.72rem; }
+body.mydna-body .mydna-search-box input { font-size: 0.86rem; }
+body.mydna-body .mono-code { font-size: 0.78rem; }
+
+/* ---------- Nav responsive ---------- */
+@media (max-width: 1100px) {
+  body.mydna-body .gc-breadcrumbs { display: none; }
+}
+@media (max-width: 760px) {
+  body.mydna-body .mydna-utility-bar { flex-wrap: wrap; row-gap: 10px; }
+  body.mydna-body .mydna-util-left { flex: 1 1 auto; }
+  body.mydna-body .mydna-util-right { flex: 1 1 100%; justify-content: space-between; gap: 8px; }
+  body.mydna-body .mydna-back-lp-pill span:last-child { display: none; }
+  body.mydna-body .gc-case-menu { flex: 1; min-width: 0; }
+  body.mydna-body .gc-case-menu > summary { width: 100%; }
+  body.mydna-body .gc-case-menu-cur { flex: 1; max-width: none; }
+  body.mydna-body .gc-case-menu .mydna-quick-case-strip { left: 0; right: auto; min-width: min(300px, calc(100vw - 48px)); }
+  body.mydna-body #btn-open-case-modal { padding: 7px 12px !important; }
+}
+/* viz sits on its own full-width row under the badge */
+body.mydna-body .mydna-vital-Foot { flex-wrap: wrap; align-items: flex-end; }
+body.mydna-body .gc-viz { order: 2; flex: 1 0 100%; margin: 12px 0 0; }
+body.mydna-body .gc-viz[hidden] { display: none; }
+@media (min-width: 900px) {
+  body.mydna-body .diagnostic-table thead th { top: 76px; background: #F7F6FD; }
+}
+@media (max-width: 760px) {
+  body.mydna-body .gc-case-menu-k { display: none; }
+  body.mydna-body #btn-open-case-modal { width: 36px; height: 34px; padding: 0 !important; justify-content: center; font-size: 0 !important; flex: none; }
+  body.mydna-body #btn-open-case-modal > span { font-size: 0; }
+  body.mydna-body #btn-open-case-modal::before { content: "+"; font-size: 20px; font-weight: 500; line-height: 1; }
+}
+
+/* =====================================================================
+   Written patient information sheet (patientCard)
+   ===================================================================== */
+body.mydna-body .gc-pcard { margin-bottom: 20px; padding: 28px; }
+.gc-pcard[hidden] { display: none !important; }
+.pcard-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--border-subtle); margin-bottom: 8px; }
+.pcard-head h3 { font-size: 1.32rem; font-weight: 700; letter-spacing: -0.03em; color: var(--gc-ink); margin: 6px 0 4px; }
+.pcard-head p { font-size: 0.9rem; color: var(--text-muted); }
+.eyebrow-mini { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #6A3DFF; background: #EDEBFF; padding: 4px 10px; border-radius: 999px; }
+.pcard-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; }
+.pcard-sec { padding: 18px 0; border-bottom: 1px solid var(--border-hairline); break-inside: avoid; }
+.pcard-sec:nth-child(1), .pcard-sec:nth-child(2) { grid-column: 1 / -1; }
+.pcard-sec h4 { display: flex; align-items: center; gap: 10px; font-size: 1.02rem; font-weight: 700; color: var(--gc-ink); margin-bottom: 10px; }
+.pcard-n { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; background: var(--gc-ink); color: #fff; font-size: 12px; font-weight: 700; flex: none; }
+.pcard-sec dl { display: flex; flex-direction: column; gap: 10px; }
+.pcard-row { display: grid; grid-template-columns: 170px 1fr; gap: 14px; }
+.pcard-row dt { font-size: 0.8rem; font-weight: 700; color: #4B23D9; text-transform: uppercase; letter-spacing: .04em; padding-top: 2px; }
+.pcard-row dd { font-size: 0.92rem; color: var(--text-secondary); line-height: 1.6; margin: 0; }
+.pcard-sec[data-key="dx"] dd { color: var(--gc-ink); }
+.pcard-sec[data-key="dx"] .pcard-row:nth-child(2) dd { font-family: var(--font-mono); font-size: 0.84rem; }
+.pcard-footer { margin-top: 16px; padding: 12px 14px; border-radius: 12px; background: #FFFBEB; color: #92400E; font-size: 0.82rem; }
+@media (max-width: 900px) {
+  .pcard-body { grid-template-columns: 1fr; }
+  .pcard-row { grid-template-columns: 1fr; gap: 2px; }
+  body.mydna-body .gc-pcard { padding: 20px; }
+}
+@media print {
+  body.gc-print-pcard * { visibility: hidden !important; }
+  body.gc-print-pcard #patient-card-section,
+  body.gc-print-pcard #patient-card-section * { visibility: visible !important; }
+  body.gc-print-pcard #patient-card-section { position: absolute; inset: 0 auto auto 0; width: 100%; box-shadow: none !important; border: 0 !important; padding: 0 !important; }
+  body.gc-print-pcard #btn-print-pcard { display: none !important; }
+  body.gc-print-pcard .pcard-body { grid-template-columns: 1fr; }
+  body.gc-print-pcard .mydna-utility-bar { position: static !important; }
+}
+.gc-viz-range { overflow: visible; }
+.gc-viz-range .gc-viz-ref { position: absolute; top: -3px; bottom: -3px; width: 2px; margin-left: -1px; background: #0B1226; border-radius: 1px; }
+
+/* =====================================================================
+   v4 — UX fixes: filters, empty states, patient mode, anchors, level 3
+   ===================================================================== */
+/* Anchored sections land below the sticky nav instead of under it */
+body.mydna-body #results-workspace,
+body.mydna-body #pedigree-anchor,
+body.mydna-body #level2-disclosure-bar,
+body.mydna-body #level3-disclosure-bar,
+body.mydna-body #patient-card-section,
+body.mydna-body #overview-pedestal-section { scroll-margin-top: 92px; }
+
+/* Filter pills with counts; disabled when empty */
+body.mydna-body .filter-pill { display: inline-flex; align-items: center; gap: 6px; }
+body.mydna-body .filter-pill .filter-count {
+  min-width: 20px; height: 20px; padding: 0 6px; border-radius: 999px;
+  display: inline-grid; place-items: center; font-size: 11px; font-weight: 700;
+  background: rgba(11, 18, 38, 0.06); color: var(--text-muted);
+}
+body.mydna-body .filter-pill.active .filter-count { background: rgba(255, 255, 255, 0.25); color: inherit; }
+body.mydna-body .filter-pill:disabled { opacity: .45; cursor: not-allowed; }
+body.mydna-body .gc-empty-row td { text-align: center; padding: 28px 16px !important; color: var(--text-muted); font-size: .9rem; }
+.gc-link-btn { background: none; border: 0; padding: 0; margin-left: 6px; color: #6A3DFF; font-weight: 600; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
+@media (max-width: 899px) {
+  body.mydna-body .diagnostic-table tr.gc-empty-row { text-align: center; }
+  body.mydna-body .diagnostic-table tr.gc-empty-row td::before { content: none !important; }
+}
+
+/* Patient mode: hide clinician-only technical blocks, lead with plain language */
+body.mydna-body[data-audience="patient"] #integrity-grid,
+body.mydna-body[data-audience="patient"] .gc-level-banner { display: none; }
+
+/* Level 3: readable long values, honest status colours */
+body.mydna-body .kv-box.kv-long { grid-column: 1 / -1; }
+body.mydna-body .kv-box.kv-long .kv-val { font-family: var(--font-sans); font-weight: 500; font-size: .9rem; line-height: 1.6; }
+body.mydna-body .gc-prov-status.is-pending { color: #B45309; }
+/* Patient sheet: collapsed preview (first two sections) until expanded */
+.pcard-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.gc-pcard.is-collapsed .pcard-body { max-height: 360px; overflow: hidden; position: relative; }
+.gc-pcard.is-collapsed .pcard-body::after { content: ""; position: absolute; inset: auto 0 0 0; height: 120px; background: linear-gradient(180deg, rgba(255,255,255,0), #fff); }
+.gc-pcard.is-collapsed .pcard-footer { display: none; }
+@media print { body.gc-print-pcard .gc-pcard .pcard-body { max-height: none !important; overflow: visible !important; } body.gc-print-pcard .gc-pcard .pcard-body::after { display: none !important; } body.gc-print-pcard .pcard-actions { display: none !important; } }

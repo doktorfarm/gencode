@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GenCode® — Clinical Genomic Dashboard &amp; Adaptive Reporting</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=gencode9" />
+  <link rel="stylesheet" href="./theme-landing.css?v=4" />
+</head>
+<body class="mydna-body" data-scroll-dir="down">
+  <!-- Top Scroll Progress Bar -->
+  <div class="scroll-progress-track" aria-hidden="true">
+    <div id="scroll-progress-bar" class="scroll-progress-bar"></div>
+  </div>
+
+  <!-- 3D Architectural Fluted Column Studio Backdrop -->
+  <div class="mydna-studio-backdrop" aria-hidden="true">
+    <div class="mydna-fluted-wall"></div>
+    <div class="mydna-pillar mydna-pillar-left"></div>
+    <div class="mydna-pillar mydna-pillar-left-sm"></div>
+    <div class="mydna-pillar mydna-pillar-right"></div>
+  </div>
+
+  <div class="mydna-page-wrapper">
+    <!-- =====================================================================
+         UNIFIED GENCODE APPLICATION TOPBAR & BREADCRUMB NAVIGATION
+         ===================================================================== -->
+    <header class="mydna-utility-bar" aria-label="Workspace Navigation">
+      <div class="mydna-util-left">
+        <a href="./index.html" class="gc-nav-logo" aria-label="GenCode — strona główna">
+          <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="gcn1" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3B82F6"/><stop offset=".55" stop-color="#5B4BF0"/><stop offset="1" stop-color="#8B6BFF"/></linearGradient><radialGradient id="gcn2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#B8A6FF"/><stop offset="1" stop-color="#6A3DFF"/></radialGradient></defs><path d="M35 8C39.97 8 44 12.03 44 17C44 20.4 42.1 23.35 39.3 24.88C34.2 27.65 30.8 30.1 29.8 32.8C29.1 34.7 31.8 37.2 37.8 38.6C40.1 37.2 42.8 36.5 45.5 36.8C50.4 37.4 54.2 41.6 54 46.6C53.8 51.8 49.4 55.9 44.2 55.6C39.6 55.3 36 51.7 35.5 47.2C34.8 41.2 30.5 39.2 26.2 42.5L21.5 47.2C20.2 48.5 18.2 48.2 17.4 46.8C16.7 45.6 17.2 44.1 18.5 43.1L23.5 38.8C26.5 36.1 25.5 31.8 20.2 30.2C18.2 31.1 15.9 31.5 13.5 31.1C8.3 30.2 4.8 25.2 5.7 20C6.6 14.8 11.6 11.3 16.8 12.2C20.2 12.8 22.9 15.1 24.1 18.1C25.8 22.2 29.5 22.1 31.8 18.2C31.2 16.9 31 15.5 31.2 14C31.7 10.5 33.1 8 35 8Z" fill="url(#gcn1)"/><circle cx="12.5" cy="52.5" r="7.5" fill="url(#gcn2)"/></svg>
+          <b>GenCode<sup>®</sup></b>
+        </a>
+        <a href="./index.html" class="mydna-back-lp-pill" title="Powrót na stronę informacyjną GenCode®">
+          <span>←</span>
+          <span data-i18n="nav_lp">Strona główna</span>
+        </a>
+
+        <!-- Contextual Breadcrumb Trail -->
+        <nav class="gc-breadcrumbs" aria-label="Breadcrumb">
+          <span class="gc-bc-item" data-i18n="bc_workspace">GenCode® Workspace</span>
+          <span class="gc-bc-sep" aria-hidden="true">/</span>
+          <span class="gc-bc-item" id="bc-module-name" data-i18n="bc_module_overview">Przegląd i Próbki</span>
+          <span class="gc-bc-sep" aria-hidden="true">/</span>
+          <span class="gc-bc-item gc-bc-active" id="bc-active-case">Przypadek 1 (NF1 c.3525_3526del)</span>
+        </nav>
+      </div>
+
+      <!-- Case Switcher & Actions -->
+      <div class="mydna-util-right">
+        <details class="gc-case-menu" id="gc-case-menu">
+          <summary aria-label="Wybór przypadku klinicznego">
+            <span class="gc-case-menu-k" data-i18n="case_menu_label">Przypadek</span>
+            <span class="gc-case-menu-cur" id="gc-case-current">Przypadek 1: NF1 (RASopatie)</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>
+          </summary>
+        <div class="mydna-quick-case-strip" role="group" aria-label="Wybór przypadku klinicznego">
+          <button type="button" class="mydna-case-chip active" data-load-case="nf1">
+            <span>🧠</span>
+            <span data-i18n="tpl_nf1_short">Przypadek 1: NF1 (RASopatie)</span>
+          </button>
+          <button type="button" class="mydna-case-chip" data-load-case="pten">
+            <span>🧩</span>
+            <span data-i18n="tpl_pten_short">Przypadek 2: PTEN (zespół Cowdena)</span>
+          </button>
+        </div>
+        </details>
+
+        <button id="btn-open-case-modal" class="btn-accent-pill" type="button" style="padding: 7px 15px; font-size: 0.76rem;">
+          <span data-i18n="btn_add_case_top">+ Nowy przypadek</span>
+        </button>
+
+        <div class="lang-switch" role="group" aria-label="Language switch">
+          <button id="lang-pl" class="lang-btn active" type="button">PL</button>
+          <button id="lang-en" class="lang-btn" type="button">EN</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- =====================================================================
+         GENCODE GLASSMORPHIC MONITOR ON 3D PEDESTAL
+         (Preserves Reference UX/UI Architecture, Adapted 100% to GenCode Genomics)
+         ===================================================================== -->
+    <section id="overview-pedestal-section" class="mydna-pedestal-stage" aria-label="GenCode Genomic Telemetry Monitor">
+      <div class="mydna-glass-bezel">
+        <div class="mydna-glass-screen">
+          <!-- 1. LEFT VERTICAL MODULE SIDEBAR RAIL -->
+          <aside class="mydna-sidebar" aria-label="Moduły GenCode">
+            <!-- Glowing Blue-Violet GenCode Molecular Capsule Logo -->
+            <a href="./index.html" class="mydna-capsule-logo" title="GenCode® — Strona główna">
+              <svg viewBox="0 0 44 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <linearGradient id="capsule-grad" x1="22" y1="0" x2="22" y2="82" gradientUnits="userSpaceOnUse">
+                    <stop offset="0%" stop-color="#8B6BFF" />
+                    <stop offset="38%" stop-color="#6A3DFF" />
+                    <stop offset="75%" stop-color="#5B4BF0" />
+                    <stop offset="100%" stop-color="#3B82F6" />
+                  </linearGradient>
+                </defs>
+                <rect x="2" y="2" width="40" height="78" rx="20" fill="url(#capsule-grad)" stroke="rgba(255,255,255,0.68)" stroke-width="1.5"/>
+                <ellipse cx="22" cy="14" rx="13" ry="7" fill="rgba(255,255,255,0.28)" />
+                <path d="M22 18V32M15 25H29" stroke="#FFFFFF" stroke-width="2.2" stroke-linecap="round"/>
+                <path d="M5 58H14L17.5 51L22 65L26 55L29 58H39" stroke="#FFFFFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" opacity="0.92"/>
+              </svg>
+            </a>
+
+            <!-- GenCode Module Navigation Stack with Liquid Metaball Active Bridge & Micro-Labels -->
+            <nav class="mydna-nav-rail" aria-label="Nawigacja modułowa">
+              <div class="mydna-metaball-group">
+                <button type="button" class="mydna-rail-btn active" id="rail-btn-dashboard" data-module="Przegląd (Overview)" data-rail-label="Panel" title="1. Overview — Przegląd telemetrii i statusu próbki">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7" rx="2"/>
+                    <rect x="14" y="3" width="7" height="7" rx="2"/>
+                    <rect x="3" y="14" width="7" height="7" rx="2"/>
+                    <rect x="14" y="14" width="7" height="7" rx="2"/>
+                  </svg>
+                </button>
+                <div class="mydna-metaball-neck" aria-hidden="true"></div>
+                <button type="button" class="mydna-rail-btn" id="rail-btn-pedigree" data-module="Wizualizacja Genomowa (Rodowód I–IV)" data-rail-label="Rodowód" title="2. Genomic Visualization — Interaktywny Rodowód I–IV">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                    <rect x="3" y="4" width="18" height="16" rx="3"/>
+                    <path d="M7 12h3l2-3 2 6 2-3h1"/>
+                  </svg>
+                </button>
+              </div>
+
+              <button type="button" class="mydna-rail-btn" id="rail-btn-patient" data-module="Raport Adaptacyjny (Poziom 1–3)" data-rail-label="Raport" title="3. Adaptive Reports — Raport Kliniczny / Badawczy / Pacjenta">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                  <rect x="4" y="3" width="16" height="18" rx="2"/>
+                  <path d="M9 8h6M9 12h6M9 16h4"/>
+                </svg>
+              </button>
+
+              <button type="button" class="mydna-rail-btn" id="rail-btn-doctor" data-module="Interpretacja i Symulator Kaskadowy" data-rail-label="Kaskada" title="4. Interpretation & Cascade Simulator — Analiza Guz vs. Krew i Plan Rodzinny">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                  <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4"/>
+                  <circle cx="12" cy="12" r="4"/>
+                </svg>
+              </button>
+
+              <button type="button" class="mydna-rail-btn" id="rail-btn-add" data-module="Rejestracja Próbki / Przypadku" data-rail-label="Próbki" title="5. Samples & Cases — Dodaj lub zmień przypadek kliniczny">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9">
+                  <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Z"/>
+                  <path d="M8 12h8M12 8v8"/>
+                </svg>
+              </button>
+            </nav>
+
+            <!-- Bottom GenCode System Status Emblem (No Person Photo) -->
+            <div class="mydna-avatar-wrap" title="GenCode® Clinical Decision Support Engine v4">
+              <div class="mydna-avatar-img" style="display:flex; align-items:center; justify-content:center; background:linear-gradient(135deg, #0B1226 0%, #6A3DFF 100%); color:#FFFFFF; font-family:'Inter',sans-serif; font-size:0.78rem; font-weight:800; letter-spacing:0.03em;">
+                GC®
+              </div>
+            </div>
+          </aside>
+
+          <!-- 2. MAIN GLASS DASHBOARD CONTENT AREA (GenCode Genomic Telemetry) -->
+          <div class="mydna-main-area">
+            <!-- Top Case Header & Genomic Search Bar -->
+            <div class="mydna-topbar">
+              <div class="mydna-greeting">
+                <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:3px;">
+                  <span class="gc-sample-pill" id="mydna-sample-code">GC-2026-Z11 • SMP-FFPE-8841</span>
+                  <span class="gc-qc-pill" id="mydna-qc-pill">QC PASS • 540× NGS</span>
+                </div>
+                <h1 id="mydna-greeting-title">Przypadek 1 — Nerwiakowłókniakowatość typu 1: NF1 c.3525_3526del p.(Arg1176SerfsTer18)</h1>
+                <p id="mydna-greeting-sub">Genetyka kliniczna • RASopatie / Neurofibromatoza • Autosomalne dominujące (AD)</p>
+              </div>
+
+              <div class="mydna-topbar-right">
+                <label class="mydna-search-box" for="mydna-search-input">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#374151" stroke-width="2.2">
+                    <circle cx="11" cy="11" r="7"/>
+                    <path d="M20 20l-3.5-3.5"/>
+                  </svg>
+                  <input id="mydna-search-input" type="search" placeholder="Szukaj genu, HGVS lub krewnego (np. I-1, NF1, PTEN)..." autocomplete="off" />
+                </label>
+
+                <button type="button" class="mydna-bell-btn" id="btn-trigger-case-switch" title="Przełącz przypadek (NF1 ↔ PTEN)">
+                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2">
+                    <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
+                  </svg>
+                  <span class="mydna-bell-dot"></span>
+                </button>
+              </div>
+            </div>
+
+            <!-- 2-COLUMN BENTO STAGE (Left Genomic/Pedigree Telemetry + Right 3D Anatomy Locus Map) -->
+            <div class="mydna-bento-stage">
+              <!-- LEFT COLUMN -->
+              <div class="mydna-left-col">
+                <!-- Row 1: 3 Primary Variant & Classification Telemetry Cards -->
+                <div class="mydna-vitals-row">
+                  <!-- Card 1: Primary Variant & Consequence -->
+                  <article class="mydna-vital-card" id="vital-card-temp" title="Kliknij, aby przejść do szczegółów wariantu">
+                    <div class="mydna-vital-head">
+                      <div class="mydna-vital-icon">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                          <rect width="26" height="26" rx="8" fill="#DBEAFE" opacity="0.65"/>
+                          <path d="M8 5C8 10 18 10 18 13C18 16 8 16 8 21" stroke="#6A3DFF" stroke-width="2" stroke-linecap="round"/>
+                          <path d="M18 5C18 10 8 10 8 13C8 16 18 16 18 21" stroke="#5A2FF0" stroke-width="2" stroke-linecap="round"/>
+                          <circle cx="13" cy="13" r="2.3" fill="#EF4444"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 id="vital-1-title">Wariant Główny</h3>
+                        <span id="vital-1-sub">NF1 • c.3525_3526del</span>
+                      </div>
+                    </div>
+                    <div class="mydna-vital-Foot">
+                      <div class="gc-viz" aria-hidden="true"></div>
+                      <div class="mydna-vital-badge">
+                        <strong id="vital-1-val">PVS1</strong>
+                        <small id="vital-1-unit">Stop-Gain</small>
+                      </div>
+                    </div>
+                  </article>
+
+                  <!-- Card 2: ACMG / ClinVar Classification (Elevated White Card) -->
+                  <article class="mydna-vital-card mydna-vital-card-elevated" id="vital-card-hr" title="Kliknij, aby otworzyć kryteria ACMG i ClinVar">
+                    <div class="mydna-vital-head">
+                      <div class="mydna-vital-icon">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" aria-hidden="true">
+                          <defs>
+                            <linearGradient id="acmgShieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                              <stop offset="0%" stop-color="#3B82F6"/>
+                              <stop offset="55%" stop-color="#6A3DFF"/>
+                              <stop offset="100%" stop-color="#2E1A8F"/>
+                            </linearGradient>
+                          </defs>
+                          <path d="M13 2.5L21.5 6V12.5C21.5 18.2 17.9 22.4 13 24C8.1 22.4 4.5 18.2 4.5 12.5V6L13 2.5Z" fill="url(#acmgShieldGrad)"/>
+                          <path d="M9.5 13.2L11.8 15.5L16.8 10.5" stroke="#FFFFFF" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 id="vital-2-title">Klasyfikacja ACMG</h3>
+                        <span id="vital-2-sub">ClinVar VCV000428971</span>
+                      </div>
+                    </div>
+                    <div class="mydna-vital-Foot">
+                      <div class="gc-viz" aria-hidden="true"></div>
+                      <div class="mydna-vital-badge mydna-vital-badge-soft">
+                        <strong id="vital-2-val">Klasa 5</strong>
+                        <small id="vital-2-unit">Pathogenic</small>
+                      </div>
+                    </div>
+                  </article>
+
+                  <!-- Card 3: Sample Origin & Germline Prior Probability -->
+                  <article class="mydna-vital-card" id="vital-card-glucose" title="Kliknij, aby przejść do symulatora kaskadowego">
+                    <div class="mydna-vital-head">
+                      <div class="mydna-vital-icon">
+                        <svg width="26" height="26" viewBox="0 0 26 26" fill="none">
+                          <circle cx="13" cy="13" r="2.6" fill="#5B4BF0"/>
+                          <circle cx="13" cy="6" r="2.2" fill="#6366F1"/>
+                          <circle cx="13" cy="20" r="2.2" fill="#6366F1"/>
+                          <circle cx="7" cy="9.5" r="2.2" fill="#818CF8"/>
+                          <circle cx="19" cy="9.5" r="2.2" fill="#6A3DFF"/>
+                          <circle cx="7" cy="16.5" r="2.2" fill="#6A3DFF"/>
+                          <circle cx="19" cy="16.5" r="2.2" fill="#818CF8"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 id="vital-3-title">Frakcja Allelu (VAF)</h3>
+                        <span id="vital-3-sub">138 / 259 odczytów</span>
+                      </div>
+                    </div>
+                    <div class="mydna-vital-Foot">
+                      <div class="gc-viz" aria-hidden="true"></div>
+                      <div class="mydna-vital-badge">
+                        <strong id="vital-3-val">70–75%</strong>
+                        <small id="vital-3-unit">a priori</small>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+                <!-- Row 2: Molecular & Pedigree Parameters Section -->
+                <div class="mydna-conditions-block">
+                  <div class="mydna-conditions-header">
+                    <div>
+                      <h2 id="conditions-heading">Parametry Molekularne i Rodowodowe</h2>
+                      <span id="conditions-subcount">4 pokolenia (I–IV) • 14 członków rodziny • 2 tory genetyczne</span>
+                    </div>
+                  </div>
+
+                  <div class="mydna-conditions-grid">
+                    <!-- Left Sub-Column (gnomAD Rarity + 3D Protein Truncation + Dual-Track Inheritance Pill) -->
+                    <div class="mydna-cond-left-stack">
+                      <div class="mydna-cond-pair">
+                        <!-- Sub-Card 1: Population Frequency (gnomAD v4) -->
+                        <article class="mydna-cond-card">
+                          <div class="mydna-cond-top">
+                            <h4 id="cond-1-title">Częstość gnomAD v4</h4>
+                            <span id="cond-1-sub">Kryterium PM2_Supporting</span>
+                          </div>
+                          <div class="mydna-cond-ruler-row">
+                            <div class="mydna-ruler-bars" id="cond-1-ruler" aria-hidden="true">
+                              <span></span><span class="active"></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+                            </div>
+                            <div class="mydna-vital-badge">
+                              <strong id="cond-1-val">0.0014</strong>
+                              <small id="cond-1-unit">% AF</small>
+                            </div>
+                          </div>
+                        </article>
+
+                        <!-- Sub-Card 2: 3D Protein Structure Truncation -->
+                        <article class="mydna-cond-card">
+                          <div class="mydna-cond-top">
+                            <h4 id="cond-2-title">Struktura Białka 3D</h4>
+                            <span id="cond-2-sub">Kodon STOP: aa 1203 / 1863</span>
+                          </div>
+                          <div class="mydna-cond-ruler-row">
+                            <div class="mydna-ruler-bars" id="cond-2-ruler" aria-hidden="true">
+                              <span></span><span></span><span></span><span></span><span></span><span></span><span class="active"></span><span></span><span></span>
+                            </div>
+                            <div class="mydna-vital-badge">
+                              <strong id="cond-2-val">-35.4</strong>
+                              <small id="cond-2-unit">% łańcucha</small>
+                            </div>
+                          </div>
+                        </article>
+                      </div>
+
+                      <!-- Wide Pill Card: Inheritance Model & 2nd Family Track -->
+                      <article class="mydna-sleep-card">
+                        <div>
+                          <h4 id="cond-sleep-title">Model Dziedziczenia i II Tor w Rodzinie</h4>
+                          <span id="cond-sleep-sub">AD (niepełna penetracja) + 3× poronienie samoistne (II-6)</span>
+                        </div>
+                        <div class="mydna-sleep-track">
+                          <span class="mydna-sleep-pill" id="cond-sleep-pill">KROK 1: RODZICE + OCENA KLINICZNA</span>
+                        </div>
+                      </article>
+                    </div>
+
+                    <!-- Right Tall Cascade Testing Risk Card with Circular Arc Gauge -->
+                    <article class="mydna-activity-card">
+                      <div class="mydna-cond-top">
+                        <h4 id="cond-act-title">Ryzyko Kaskadowe</h4>
+                        <span id="cond-act-sub">Krewni I stopnia (jeśli krew +)</span>
+                      </div>
+
+                      <div class="mydna-gauge-wrap">
+                        <svg class="mydna-gauge-svg" viewBox="0 0 130 130">
+                          <defs>
+                            <linearGradient id="mydna-arc-grad" x1="0%" y1="100%" x2="100%" y2="0%">
+                              <stop offset="0%" stop-color="#6A3DFF"/>
+                              <stop offset="60%" stop-color="#2E1A8F"/>
+                              <stop offset="100%" stop-color="#0B1226"/>
+                            </linearGradient>
+                          </defs>
+                          <circle cx="65" cy="65" r="48" fill="none" stroke="rgba(255,255,255,0.85)" stroke-width="10"/>
+                          <circle
+                            cx="65"
+                            cy="65"
+                            r="48"
+                            fill="none"
+                            stroke="#E6E4F2"
+                            stroke-width="6"
+                            stroke-dasharray="220 302"
+                            stroke-dashoffset="0"
+                            stroke-linecap="round"
+                            transform="rotate(135 65 65)"
+                          />
+                          <circle
+                            id="mydna-activity-arc"
+                            cx="65"
+                            cy="65"
+                            r="48"
+                            fill="none"
+                            stroke="url(#mydna-arc-grad)"
+                            stroke-width="6.5"
+                            stroke-dasharray="145 302"
+                            stroke-dashoffset="0"
+                            stroke-linecap="round"
+                            transform="rotate(135 65 65)"
+                          />
+                        </svg>
+                        <div class="mydna-gauge-center">
+                          <strong id="cond-act-val">50%</strong>
+                          <small id="cond-act-unit">Ryzyko AD</small>
+                        </div>
+                        <div class="mydna-gauge-Target" id="cond-act-target">4 krewnych I° w Kroku 2–3</div>
+                      </div>
+                    </article>
+                  </div>
+                </div>
+
+                <!-- Row 3: Clinical Priority Action Banner -->
+                <div class="mydna-relax-banner">
+                  <svg class="mydna-relax-waves" viewBox="0 0 400 120" fill="none" aria-hidden="true">
+                    <path d="M180 120 C220 40, 300 20, 400 70" stroke="rgba(255,255,255,0.22)" stroke-width="1.2"/>
+                    <path d="M210 130 C250 55, 320 35, 410 85" stroke="rgba(255,255,255,0.16)" stroke-width="1.2"/>
+                    <path d="M240 140 C280 70, 345 50, 420 100" stroke="rgba(255,255,255,0.12)" stroke-width="1.2"/>
+                  </svg>
+                  <div class="mydna-relax-text" style="max-width: 390px;">
+                    <h3 id="relax-banner-title">Priorytet Kliniczny (Krok 1): Badanie Rodziców i Konsultacja Genetyczna</h3>
+                    <p id="relax-banner-desc">
+                      Celowane badanie wariantu NF1 c.3525_3526del u obojga biologicznych rodziców oraz badanie kliniczne Badanej pod kątem kryteriów NF1.
+                    </p>
+                  </div>
+                  <button type="button" class="mydna-relax-btn" id="btn-relax-action">
+                    Przejdź do Raportu i Rodowodu ↓
+                  </button>
+                </div>
+              </div>
+
+              <!-- RIGHT COLUMN: GENCODE 3D GENOMIC LOCUS & PROTEIN DOMAIN ARCHITECTURE VIEWER (NO PERSON) -->
+              <div class="mydna-anatomy-col">
+                <div class="mydna-anatomy-stage">
+                  <div class="gc-anat-header">
+                    <span class="gc-anat-tag" id="anatomy-stage-tag">MAPA LOCUS GENOMOWEGO I STRUKTURY 3D</span>
+                    <span class="gc-anat-hint" data-i18n="anat_click_hint">Kliknij węzeł molekularny (1–3)</span>
+                  </div>
+
+                  <div class="mydna-body-figure-wrap gc-molecular-stage-wrap">
+                    <!-- Clean Vector Genomic & 3D Protein Domain Architecture Diagram -->
+                    <svg
+                      class="gc-molecular-locus-svg"
+                      viewBox="0 0 280 370"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      aria-label="Schemat locus chromosomowego, architektury domen białkowych 3D i materiału diagnostycznego"
+                    >
+                      <defs>
+                        <linearGradient id="gcHelixRailA" x1="0" y1="0" x2="280" y2="370" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#6A3DFF"/>
+                          <stop offset="55%" stop-color="#4F46E5"/>
+                          <stop offset="100%" stop-color="#0B1226"/>
+                        </linearGradient>
+                        <linearGradient id="gcHelixRailB" x1="280" y1="0" x2="0" y2="370" gradientUnits="userSpaceOnUse">
+                          <stop offset="0%" stop-color="#38BDF8"/>
+                          <stop offset="50%" stop-color="#6A3DFF"/>
+                          <stop offset="100%" stop-color="#6366F1"/>
+                        </linearGradient>
+                        <linearGradient id="gcNodeCardBg" x1="0" y1="0" x2="0" y2="1">
+                          <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.96"/>
+                          <stop offset="100%" stop-color="#F3F2FA" stop-opacity="0.92"/>
+                        </linearGradient>
+                      </defs>
+
+                      <!-- Subtle Scientific Grid Rings -->
+                      <circle cx="140" cy="185" r="118" stroke="#D8D6E8" stroke-opacity="0.45" stroke-dasharray="3 5"/>
+                      <circle cx="140" cy="185" r="78" stroke="#D8D6E8" stroke-opacity="0.35"/>
+
+                      <!-- Vertical 3D Double-Helix Backbone Connecting the 3 Molecular Tiers -->
+                      <path
+                        d="M92 26 C188 72, 92 138, 188 185 C92 232, 188 298, 92 344"
+                        stroke="url(#gcHelixRailA)"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        opacity="0.32"
+                      />
+                      <path
+                        d="M188 26 C92 72, 188 138, 92 185 C188 232, 92 298, 188 344"
+                        stroke="url(#gcHelixRailB)"
+                        stroke-width="4"
+                        stroke-linecap="round"
+                        opacity="0.32"
+                      />
+
+                      <!-- Base-Pair Rungs Across the Helix -->
+                      <g stroke="#8A90AD" stroke-width="1.5" stroke-linecap="round" opacity="0.4">
+                        <line x1="108" y1="48" x2="172" y2="48"/>
+                        <line x1="115" y1="115" x2="165" y2="115"/>
+                        <line x1="106" y1="158" x2="174" y2="158"/>
+                        <line x1="106" y1="214" x2="174" y2="214"/>
+                        <line x1="115" y1="255" x2="165" y2="255"/>
+                        <line x1="108" y1="322" x2="172" y2="322"/>
+                      </g>
+
+                      <!-- TIER 1: CHROMOSOMAL LOCUS & EXON MAP -->
+                      <g transform="translate(18, 44)">
+                        <rect width="244" height="72" rx="14" fill="url(#gcNodeCardBg)" stroke="#FFFFFF" stroke-width="1.5"/>
+                        <text x="14" y="21" fill="#5B6280" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" letter-spacing="0.06em">01 • LOCUS CHROMOSOMOWY (GRCh38)</text>
+                        <!-- Chromosome Ideogram Bar -->
+                        <rect x="14" y="31" width="216" height="12" rx="6" fill="#E6E4F2"/>
+                        <rect x="28" y="31" width="36" height="12" rx="3" fill="#8A90AD"/>
+                        <rect x="86" y="31" width="52" height="12" fill="#3B82F6" opacity="0.28"/>
+                        <!-- Variant Locus Marker Line -->
+                        <rect x="150" y="28" width="4" height="18" rx="2" fill="#EF4444"/>
+                        <text x="14" y="59" fill="#0B1226" font-family="Inter, sans-serif" font-size="10" font-weight="700">p-arm / Centromer</text>
+                        <text x="142" y="59" fill="#5A2FF0" font-family="JetBrains Mono, monospace" font-size="9.5" font-weight="700">q-arm • Ekson docelowy</text>
+                      </g>
+
+                      <!-- TIER 2: 3D PROTEIN DOMAIN ARCHITECTURE & STOP-GAIN / FOLDING SITE -->
+                      <g transform="translate(18, 148)">
+                        <rect width="244" height="76" rx="14" fill="url(#gcNodeCardBg)" stroke="#FFFFFF" stroke-width="1.5"/>
+                        <text x="14" y="21" fill="#5B6280" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" letter-spacing="0.06em">02 • ARCHITEKTURA DOMEN BIAŁKA 3D</text>
+                        <!-- Domain Pills -->
+                        <rect x="14" y="31" width="50" height="18" rx="5" fill="#DBEAFE" stroke="#3B82F6" stroke-width="1"/>
+                        <text x="39" y="43" text-anchor="middle" fill="#2E1A8F" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" id="lm-d1">RING/TMD</text>
+
+                        <rect x="70" y="31" width="84" height="18" rx="5" fill="#E0E7FF" stroke="#4F46E5" stroke-width="1"/>
+                        <text x="112" y="43" text-anchor="middle" fill="#312E81" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" id="lm-d2">COILED / NBD1</text>
+
+                        <rect x="160" y="31" width="70" height="18" rx="5" fill="#FEE2E2" stroke="#EF4444" stroke-width="1" stroke-dasharray="3 2"/>
+                        <text x="195" y="43" text-anchor="middle" fill="#991B1B" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" id="lm-d3">BRCT / R-DOM</text>
+
+                        <text x="14" y="64" fill="#2E3552" font-family="Inter, sans-serif" font-size="9.5" font-weight="600">UniProt / AlphaFold 3D • Efekt strukturalny</text>
+                      </g>
+
+                      <!-- TIER 3: DIAGNOSTIC MATERIAL & CASCADE VERIFICATION -->
+                      <g transform="translate(18, 256)">
+                        <rect width="244" height="72" rx="14" fill="url(#gcNodeCardBg)" stroke="#FFFFFF" stroke-width="1.5"/>
+                        <text x="14" y="21" fill="#5B6280" font-family="JetBrains Mono, monospace" font-size="8.5" font-weight="700" letter-spacing="0.06em">03 • MATERIAŁ I WALIDACJA KASKADOWA</text>
+                        <rect x="14" y="30" width="102" height="24" rx="7" fill="#EFF6FF" stroke="#BFDBFE"/>
+                        <text x="65" y="45" text-anchor="middle" fill="#4B23D9" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" id="lm-s1">Krew (EDTA) • NGS</text>
+                        <rect x="126" y="30" width="104" height="24" rx="7" fill="#FAFAFE" stroke="#D8D6E8"/>
+                        <text x="178" y="45" text-anchor="middle" fill="#2E3552" font-family="Inter, sans-serif" font-size="9.5" font-weight="700" id="lm-s2">Sanger / Kariotyp</text>
+                      </g>
+                    </svg>
+
+                    <!-- Interactive Pulsing Genomic Locus Hotspots (1–3) -->
+                    <button
+                      type="button"
+                      class="mydna-hotspot active"
+                      id="hotspot-1"
+                      style="top: 21.5%; left: 74%;"
+                      data-hotspot-title="Locus Chromosomowy — NF1 (17q11.2)"
+                      data-hotspot-sub="NM_001042492.3 • c.3525_3526del w stanie heterozygotycznym"
+                      data-hotspot-locus="chr17q11.2 • NF1"
+                      aria-label="Węzeł molekularny 1"
+                    >
+                      <span class="mydna-hotspot-ring"></span>
+                      <span class="mydna-hotspot-dot"></span>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="mydna-hotspot"
+                      id="hotspot-2"
+                      style="top: 50.5%; left: 66%;"
+                      data-hotspot-title="Domena 3D Białka — Kodon STOP (aa 1203)"
+                      data-hotspot-sub="Utrata domen C-końcowych BRCT1/BRCT2 oraz sygnału NLS (-35.4% łańcucha)"
+                      data-hotspot-locus="NM_007294.4:c.3607C>T"
+                      aria-label="Węzeł molekularny 2"
+                    >
+                      <span class="mydna-hotspot-ring"></span>
+                      <span class="mydna-hotspot-dot"></span>
+                    </button>
+
+                    <button
+                      type="button"
+                      class="mydna-hotspot"
+                      id="hotspot-3"
+                      style="top: 79.5%; left: 48%;"
+                      data-hotspot-title="Segregacja — Badanie Rodziców"
+                      data-hotspot-sub="Ustalenie, czy wariant powstał de novo (I-1, I-2)"
+                      data-hotspot-locus="de novo vs. AD"
+                      aria-label="Węzeł molekularny 3"
+                    >
+                      <span class="mydna-hotspot-ring"></span>
+                      <span class="mydna-hotspot-dot"></span>
+                    </button>
+                  </div>
+
+                  <!-- Bottom Floating Glass Molecular Locus Card -->
+                  <div class="mydna-anatomy-floating-card">
+                    <div class="mydna-anat-card-left">
+                      <div class="mydna-anat-heart-icon">
+                        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" aria-hidden="true">
+                          <rect width="34" height="34" rx="10" fill="#EEF2FF"/>
+                          <path d="M11 8C11 13 23 13 23 17C23 21 11 21 11 26" stroke="#6A3DFF" stroke-width="2.2" stroke-linecap="round"/>
+                          <path d="M23 8C23 13 11 13 11 17C11 21 23 21 23 26" stroke="#4F46E5" stroke-width="2.2" stroke-linecap="round"/>
+                          <line x1="13" y1="11" x2="21" y2="11" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round"/>
+                          <line x1="13" y1="23" x2="21" y2="23" stroke="#93C5FD" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                      </div>
+                      <div class="mydna-anat-card-copy">
+                        <span class="gc-locus-micro" id="anatomy-card-locus">chr17q11.2 • NF1</span>
+                        <h4 id="anatomy-card-title">Locus Chromosomowy — NF1 (17q11.2)</h4>
+                        <span id="anatomy-card-sub">GRCh38: chr17:43091983 G&gt;A • Wariant nonsensowny PVS1</span>
+                      </div>
+                    </div>
+
+                    <svg class="mydna-anat-ecg" viewBox="0 0 96 40" fill="none" aria-hidden="true">
+                      <path d="M2 25 H26 L31 19 L36 27 L44 9 L51 34 L58 16 L64 25 H94" stroke="#6A3DFF" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-TIER SCULPTURAL WHITE CYLINDRICAL 3D PEDESTAL WITH BLUE UNDERGLOW -->
+      <div class="mydna-pedestal-base" aria-hidden="true">
+        <div class="mydna-pedestal-tier mydna-tier-1"></div>
+        <div class="mydna-pedestal-tier mydna-tier-2"></div>
+        <div class="mydna-pedestal-tier mydna-tier-3"></div>
+        <div class="mydna-pedestal-glow"></div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         GENCODE ANALYTICAL & AUDIENCE-ADAPTIVE REPORTING WORKSPACE
+         (3 Presentation Modes + 3-Level Progressive Disclosure + Provenance)
+         ===================================================================== -->
+    <div class="studio-card" style="margin-top: 28px;">
+      <section id="results-workspace" class="dashboard-section">
+        <!-- Audience Mode Bar (Clinical vs. Research vs. Patient-Friendly) -->
+        <div class="audience-bar">
+          <div class="audience-bar-info">
+            <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+              <span id="active-case-badge" class="badge badge-teal">RASopatie • Panel NGS</span>
+              <span id="active-domain-badge" class="badge badge-indigo">Autosomalne dominujące (AD)</span>
+              <button id="btn-change-case" class="btn-outline-pill" type="button" style="padding:4px 12px; font-size:0.74rem;" data-i18n="btn_switch_case">
+                ↺ Zmień / Dodaj przypadek kliniczny
+              </button>
+            </div>
+            <h2 class="gc-report-heading" data-i18n="report_heading">Raport adaptacyjny</h2>
+            <h2 id="active-case-title" style="margin-top:6px;">Przypadek 1 — Nerwiakowłókniakowatość typu 1</h2>
+            <p id="active-case-subtitle" data-i18n="active_case_subtitle">
+              Raport prezentuje dane w układzie progresywnego ujawniania (Poziom 1: Kluczowe wnioski i Rodowód → Poziom 2: Interpretacja i Kaskada → Poziom 3: Dowody źródłowe i 3D).
+            </p>
+          </div>
+
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <!-- 3-Mode Audience Switcher (Section 4.1) -->
+            <div class="audience-toggle-group" role="tablist" aria-label="Tryb prezentacji raportu">
+              <button id="tab-clinical-view" class="audience-tab active" type="button" role="tab" aria-selected="true">
+                🩺 <span data-i18n="tab_clinical">Widok Kliniczny (Lekarz)</span>
+              </button>
+              <button id="tab-research-view" class="audience-tab" type="button" role="tab" aria-selected="false">
+                🔬 <span data-i18n="tab_research">Widok Badawczy (NGS / 3D)</span>
+              </button>
+              <button id="tab-patient-view" class="audience-tab" type="button" role="tab" aria-selected="false">
+                👤 <span data-i18n="tab_patient">Widok dla Pacjenta</span>
+              </button>
+            </div>
+            <button id="btn-print-report" class="btn-outline-pill" type="button" title="Drukuj lub zapisz PDF">
+              🖨️ <span data-i18n="btn_print">Drukuj / PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- =================================================================
+             LEVEL 1 — ESSENTIAL FINDINGS & REPORT INTEGRITY (Always Visible)
+             Explicitly separates Observed Finding vs. Inferred Interpretation,
+             Pathogenicity vs. Clinical Diagnosis, and Uncertainty
+             ================================================================= -->
+        <div class="gc-level-banner">
+          <span class="gc-level-pill" data-i18n="level1_pill">POZIOM 1 • KLUCZOWE WNIOSKI I INTEGRALNOŚĆ KLINICZNA</span>
+          <span class="gc-level-note" id="level1-mode-indicator">Tryb aktywny: Widok Kliniczny (Lekarz)</span>
+        </div>
+
+        <!-- Scientific Integrity & Uncertainty Separation Grid (Section 4.3) -->
+        <div id="integrity-grid" class="gc-integrity-grid">
+          <article class="gc-integrity-card">
+            <div class="gc-int-header">
+              <span class="badge badge-teal" data-i18n="int_observed">POTWIERDZONA OBSERWACJA LABORATORYJNA</span>
+            </div>
+            <p id="int-observed-text" class="gc-int-body"></p>
+          </article>
+
+          <article class="gc-integrity-card">
+            <div class="gc-int-header">
+              <span class="badge badge-indigo" data-i18n="int_inferred">WNIOSKOWANIE I INTERPRETACJA KLINICZNA</span>
+            </div>
+            <p id="int-inferred-text" class="gc-int-body"></p>
+          </article>
+
+          <article class="gc-integrity-card">
+            <div class="gc-int-header">
+              <span class="badge badge-amber" data-i18n="int_boundary">KLASYFIKACJA PATOGENNOŚCI ≠ ROZPOZNANIE</span>
+            </div>
+            <p id="int-boundary-text" class="gc-int-body"></p>
+          </article>
+
+          <article class="gc-integrity-card">
+            <div class="gc-int-header">
+              <span class="badge badge-danger" data-i18n="int_uncertainty">OBSZAR NIEPEWNOŚCI I WYMAGANA WERYFIKACJA</span>
+            </div>
+            <p id="int-uncertainty-text" class="gc-int-body"></p>
+          </article>
+        </div>
+
+        <!-- Patient-Friendly Summary Card (Highlighted in Patient Mode, accessible in all modes) -->
+        <div id="patient-report-section" class="patient-report-card">
+          <div class="patient-report-header">
+            <span class="patient-friendly-badge">
+              <span>👤</span>
+              <span id="patient-badge-text" data-i18n="patient_badge">KOMUNIKACJA Z PACJENTEM — JĘZYK PRZYSTĘPNY I ZROZUMIAŁY</span>
+            </span>
+            <h3 id="patient-headline" class="patient-report-title">
+              Co oznacza wynik badania i jakie są kolejne kroki?
+            </h3>
+            <p id="patient-summary-lead" class="patient-report-lead"></p>
+          </div>
+
+          <div class="patient-grid">
+            <div class="patient-box">
+              <h4 data-i18n="patient_what_it_means_title">💡 Co ten wynik oznacza dla Ciebie i rodziny?</h4>
+              <p id="patient-what-it-means"></p>
+              <div style="margin-top:14px; padding-top:14px; border-top:1px solid var(--border-hairline);">
+                <h4 data-i18n="patient_family_note_title">👨‍👩‍👧‍👦 Wyjaśnienie sytuacji w rodzinie i niepewności</h4>
+                <p id="patient-family-note"></p>
+              </div>
+            </div>
+
+            <div class="patient-box">
+              <h4 data-i18n="patient_steps_title">✅ Najważniejsze kolejne kroki do omówienia z lekarzem</h4>
+              <div id="patient-steps-list" class="patient-steps-list"></div>
+            </div>
+          </div>
+
+          <div class="patient-reassurance">
+            <span>🛡️</span>
+            <span id="patient-reassurance-text"></span>
+          </div>
+        </div>
+
+        <!-- INTERACTIVE PEDIGREE VISUALIZATION (Generations I–IV) -->
+        <!-- Written patient information sheet (rendered when the case provides `patientCard`) -->
+        <div id="patient-card-section" class="bento-card gc-pcard" hidden>
+          <div class="pcard-head">
+            <div>
+              <span class="eyebrow-mini">GenCode® • ZGM</span>
+              <h3 id="pcard-title">Pisemna karta informacyjna dla pacjenta</h3>
+              <p id="pcard-subtitle"></p>
+            </div>
+            <div class="pcard-actions">
+              <button id="btn-toggle-pcard" class="btn-outline-pill" type="button" aria-expanded="false" aria-controls="pcard-body">Pokaż całą kartę</button>
+              <button id="btn-print-pcard" class="btn-outline-pill" type="button">🖨️ <span data-i18n="pcard_print">Drukuj kartę</span></button>
+            </div>
+          </div>
+          <div id="pcard-body" class="pcard-body"></div>
+          <p id="pcard-footer" class="pcard-footer"></p>
+        </div>
+
+        <div id="pedigree-anchor" class="bento-card" style="margin-bottom: 20px;">
+          <div class="card-header">
+            <div>
+              <span class="card-step-num" data-i18n="step_pedigree_badge">WIZUALIZACJA GENOMOWA I RODOWODOWA • POKOLENIA I–IV</span>
+              <h3 class="card-title" data-i18n="card_pedigree_title">Interaktywny Rodowód Genetyczny (Kliknij dowolnego członka rodziny)</h3>
+            </div>
+            <div class="pedigree-toolbar">
+              <div class="mode-pill-group">
+                <button id="ped-mode-color" class="mode-pill active" type="button" data-i18n="ped_mode_color">Kolor kliniczny</button>
+                <button id="ped-mode-bw" class="mode-pill" type="button" data-i18n="ped_mode_bw">Klasyczny B&amp;W (ISCN/Egzamin)</button>
+              </div>
+              <button id="btn-export-svg" class="btn-outline-pill" type="button" style="padding: 5px 12px; font-size: 0.74rem;" data-i18n="btn_export_svg">
+                Pobierz SVG
+              </button>
+            </div>
+          </div>
+
+          <div class="pedigree-stage">
+            <div id="pedigree-svg-wrapper" class="pedigree-svg-wrapper"></div>
+
+            <aside id="member-inspector" class="member-inspector" aria-live="polite">
+              <div class="inspector-tag" id="insp-id">II-1 • PROBAND</div>
+              <h4 class="inspector-name" id="insp-name">Badana (probantka)</h4>
+              <div class="inspector-role" id="insp-role">Probantka</div>
+
+              <div class="inspector-block">
+                <span class="inspector-label" data-i18n="insp_pheno_label">Fenotyp i historia kliniczna</span>
+                <p id="insp-phenotype"></p>
+              </div>
+              <div class="inspector-block">
+                <span class="inspector-label" data-i18n="insp_geno_label">Status i ryzyko genetyczne</span>
+                <p id="insp-genotype" class="mono-tag"></p>
+              </div>
+              <div class="inspector-block highlight-rec">
+                <span class="inspector-label" data-i18n="insp_rec_label">Zalecenie diagnostyczne</span>
+                <p id="insp-recommendation"></p>
+              </div>
+            </aside>
+          </div>
+        </div>
+
+        <!-- =================================================================
+             PROGRESSIVE DISCLOSURE CONTROL — LEVEL 2 (Expanded Interpretation)
+             ================================================================= -->
+        <div class="extend-pro-banner" id="level2-disclosure-bar">
+          <div class="extend-pro-text">
+            <span class="pro-pill">POZIOM 2 • ROZSZERZONA INTERPRETACJA KLINICZNA</span>
+            <div>
+              <strong style="font-size:0.95rem; color:var(--text-primary); display:block;" data-i18n="lvl2_banner_title">
+                Interpretacja Genotyp–Fenotyp, Symulator Kaskadowy i Tabela Zaleceń Rodzinnych
+              </strong>
+              <span style="font-size:0.81rem; color:var(--text-secondary);" data-i18n="lvl2_banner_sub">
+                Kliknij, aby rozwinąć lub zwinąć szczegółowe uzasadnienie kliniczne, symulację scenariuszy oraz plan badań dla każdego członka rodziny.
+              </span>
+            </div>
+          </div>
+          <button id="btn-toggle-level2" class="btn-accent-pill" type="button" aria-expanded="true">
+            <span id="btn-toggle-level2-label">Zwiń Poziom 2 (Interpretacja i Kaskada)</span>
+            <span class="arrow-circle" id="btn-toggle-level2-icon">↑</span>
+          </button>
+        </div>
+
+        <!-- LEVEL 2 CONTENT CONTAINER -->
+        <div id="level2-section" class="pro-view-container">
+          <div class="bento-row-2col" style="margin-top: 16px;">
+            <div class="bento-card">
+              <div class="card-header">
+                <div>
+                  <span class="card-step-num" data-i18n="step_q2_badge">INTERPRETACJA KLINICZNA • GENOTYP–FENOTYP</span>
+                  <h3 class="card-title" data-i18n="card_q2_title">Czy w rodzinie występuje choroba genetycznie uwarunkowana?</h3>
+                </div>
+              </div>
+              <div id="pro-q2-verdict" class="verdict-banner"></div>
+              <div id="pro-q2-points" class="reasoning-points"></div>
+            </div>
+
+            <div class="bento-card" id="simulator-anchor">
+              <div class="card-header">
+                <div>
+                  <span class="card-step-num" data-i18n="step_sim_badge">SYMULATOR DECYZYJNY DLA LEKARZA</span>
+                  <h3 class="card-title" data-i18n="card_sim_title">Symulator Kaskadowy „What-If”</h3>
+                </div>
+              </div>
+              <p style="font-size:0.83rem; color:var(--text-secondary); margin-bottom:14px;" data-i18n="sim_desc">
+                Przełącz scenariusz (wariant dziedziczony lub de novo), aby zobaczyć, jak zmienia się plan badań i ryzyko u krewnych:
+              </p>
+              <div class="sim-switch-row">
+                <button id="sim-btn-germline" class="sim-btn active" type="button" data-i18n="sim_btn_germline">
+                  Scenariusz A: Wariant odziedziczony od rodzica
+                </button>
+                <button id="sim-btn-somatic" class="sim-btn" type="button" data-i18n="sim_btn_somatic">
+                  Scenariusz B: Wariant de novo
+                </button>
+              </div>
+              <div id="sim-output-box" class="sim-output-box"></div>
+            </div>
+          </div>
+
+          <div class="bento-card" style="margin-top: 20px;">
+            <div class="card-header">
+              <div>
+                <span class="card-step-num" data-i18n="step_q3_badge">PLAN POSTĘPOWANIA DIAGNOSTYCZNEGO W RODZINIE</span>
+                <h3 class="card-title" data-i18n="card_q3_title">Szczegółowe zalecenia diagnostyczne dla poszczególnych członków rodziny</h3>
+              </div>
+              <div class="filter-pills">
+                <button class="filter-pill active" type="button" data-filter="all" data-i18n="filter_all">Wszyscy</button>
+                <button class="filter-pill" type="button" data-filter="urgent" data-i18n="filter_urgent">Krok 1 (Pilne)</button>
+                <button class="filter-pill" type="button" data-filter="cascade" data-i18n="filter_cascade">Krok 2–3 (Kaskadowe)</button>
+                <button class="filter-pill" type="button" data-filter="cytogenetics" data-i18n="filter_cyto">Krok 4 / Dalsi krewni</button>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="diagnostic-table">
+                <thead>
+                  <tr>
+                    <th data-i18n="th_member">Członek rodziny</th>
+                    <th data-i18n="th_status">Status kliniczny</th>
+                    <th data-i18n="th_priority">Priorytet</th>
+                    <th data-i18n="th_test">Zalecane badanie i postępowanie lekarskie</th>
+                    <th data-i18n="th_rationale">Uzasadnienie patogenetyczne</th>
+                  </tr>
+                </thead>
+                <tbody id="pro-diagnostic-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- =================================================================
+             PROGRESSIVE DISCLOSURE CONTROL — LEVEL 3 (Advanced Evidence & Provenance)
+             ================================================================= -->
+        <div class="extend-pro-banner" id="level3-disclosure-bar" style="margin-top: 20px;">
+          <div class="extend-pro-text">
+            <span class="pro-pill" style="background:#312E81;">POZIOM 3 • ZAAWANSOWANE DOWODY BIOINFORMATYCZNE I PROWENIENCJA</span>
+            <div>
+              <strong style="font-size:0.95rem; color:var(--text-primary); display:block;" data-i18n="lvl3_banner_title">
+                Adnotacja Molekularna (HGVS / GRCh38 / gnomAD v4.1), Domeny 3D Białka i Proweniencja Baz Danych
+              </strong>
+              <span style="font-size:0.81rem; color:var(--text-secondary);" data-i18n="lvl3_banner_sub">
+                Przeznaczony dla diagnostów laboratoryjnych, bioinformatyków i audytu jakości (identyfikatory ClinVar, UniProt/AlphaFold 3D, wersje baz).
+              </span>
+            </div>
+          </div>
+          <button id="btn-toggle-level3" class="btn-outline-pill" type="button" aria-expanded="false">
+            <span id="btn-toggle-level3-label">Rozwiń Poziom 3 (Dowody Źródłowe i 3D)</span>
+            <span class="arrow-circle" id="btn-toggle-level3-icon">↓</span>
+          </button>
+        </div>
+
+        <!-- LEVEL 3 CONTENT CONTAINER -->
+        <div id="level3-section" class="pro-view-container hidden" style="margin-top: 16px;">
+          <div class="bento-row-2col">
+            <div class="bento-card">
+              <div class="card-header">
+                <div>
+                  <span class="card-step-num" data-i18n="lvl3_mol_kicker">DIAGNOSTYKA MOLEKULARNA • HGVS / ACMG / GRCh38</span>
+                  <h3 class="card-title" data-i18n="pro_variant_card_title">Charakterystyka Molekularna Wariantu</h3>
+                </div>
+                <span id="pro-acmg-badge" class="badge badge-danger">PATHOGENIC (ACMG)</span>
+              </div>
+
+              <div class="variant-kv-grid" id="pro-variant-kv"></div>
+
+              <div style="margin-top:16px; padding:14px; border-radius:12px; background:var(--bg-card-subtle); border:1px solid var(--border-hairline);">
+                <div style="font-size:0.74rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; color:var(--brand-primary); margin-bottom:6px;" data-i18n="pro_case_prompt_label">
+                  Oryginalny opis przypadku klinicznego (Tekst źródłowy)
+                </div>
+                <p id="pro-original-text" style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6;"></p>
+              </div>
+            </div>
+
+            <div class="bento-card">
+              <div class="card-header">
+                <div>
+                  <span class="card-step-num" data-i18n="lvl3_sci_kicker">BAZY POPULACYJNE I STRUKTURA BIAŁKA 3D</span>
+                  <h3 class="card-title" data-i18n="pro_science_card_title">Adnotacja Populacyjna i Strukturalna 3D</h3>
+                </div>
+                <span id="pro-clinvar-stars" class="badge badge-amber">ClinVar</span>
+              </div>
+
+              <div class="science-3col" style="grid-template-columns: 1fr; gap: 12px;">
+                <div class="science-subcard">
+                  <div class="subcard-label">ClinVar &amp; populacyjna baza gnomAD v4.1</div>
+                  <p id="pro-science-clinvar" class="subcard-text"></p>
+                  <p id="pro-science-gnomad" class="subcard-text" style="margin-top:6px;"></p>
+                </div>
+
+                <div class="science-subcard">
+                  <div class="subcard-label">Architektura domenowa białka (UniProt / AlphaFold 3D)</div>
+                  <p id="pro-science-structure" class="subcard-text"></p>
+                  <div class="domain-track" id="pro-domain-track"></div>
+                </div>
+
+                <div class="science-subcard">
+                  <div class="subcard-label">Proweniencja danych i wersje baz referencyjnych (Audit Trail)</div>
+                  <div id="pro-provenance-list" class="gc-provenance-list"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       MODAL: ADD / ANALYZE CLINICAL CASE (Samples & Cases Module)
+       ===================================================================== -->
+  <div id="case-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="case-modal-title">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="section-eyebrow" style="margin-bottom:6px;">MODUŁ SAMPLES &amp; CASES • GENCODE®</span>
+          <h3 id="case-modal-title" style="font-family:var(--font-display); font-size:1.25rem; font-weight:800;">
+            Wybierz lub wprowadź przypadek kliniczny do analizy
+          </h3>
+        </div>
+        <button id="btn-close-case-modal" class="modal-close" type="button" aria-label="Zamknij">✕</button>
+      </div>
+
+      <div style="margin-bottom: 16px; padding: 12px 14px; border-radius: 12px; background: var(--bg-canvas); border: 1px solid var(--border-hairline);">
+        <div style="font-size: 0.74rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text-muted); margin-bottom: 8px;">
+          Zwalidowane referencyjne przypadki kliniczne:
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+          <button type="button" class="quick-case-pill" data-load-case="nf1">
+            🧠 Przypadek 1: NF1 — nerwiakowłókniakowatość typu 1 (panel RASopatii)
+          </button>
+          <button type="button" class="quick-case-pill" data-load-case="pten">
+            🧩 Przypadek 2: PTEN — zespół Cowdena / PHTS
+          </button>
+        </div>
+      </div>
+
+      <div class="modal-grid">
+        <div>
+          <label class="form-label" for="custom-case-textarea">
+            Opis wywiadu rodzinnego / wynik badania genetycznego (AD, AR, X-linked, kariotyp, onkogenetyka)
+          </label>
+          <textarea id="custom-case-textarea" class="form-textarea" placeholder="Wklej treść zadania lub opis pacjenta, np.: Pacjentka 34 l., trzy poronienia samoistne, lub opis rodziny z chorobą monogenową / wariantem HGVS..."></textarea>
+
+          <div style="margin-top: 12px;">
+            <label class="form-label" for="gemini-api-key-input">
+              Opcjonalny klucz Gemini API (dla analizy z modelem gemini-3.8-flash; bez klucza działa deterministyczny silnik reguł klinicznych)
+            </label>
+            <input id="gemini-api-key-input" type="password" class="form-input" placeholder="AIzaSy... (opcjonalnie)" />
+          </div>
+        </div>
+
+        <div>
+          <label class="form-label">Zdjęcie dokumentacji / karty przypadku (opcjonalnie)</label>
+          <label class="upload-dropzone" for="case-image-input">
+            <input id="case-image-input" type="file" accept="image/*" class="hidden" />
+            <div style="font-size: 1.5rem; margin-bottom: 6px;">📷</div>
+            <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary);">
+              Kliknij, aby dodać zdjęcie przypadku
+            </div>
+            <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">
+              Obsługuje JPG / PNG (np. skan karty konsultacyjnej)
+            </div>
+            <img id="case-image-preview" class="upload-preview hidden" alt="Podgląd zdjęcia przypadku" />
+          </label>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:18px; padding-top:14px; border-top:1px solid var(--border-hairline);">
+        <button id="btn-cancel-case-modal" type="button" class="btn-outline-pill">Anuluj</button>
+        <button id="btn-run-case-analysis" type="button" class="btn-accent-pill">
+          <span id="btn-run-case-label">Uruchom analizę i wygeneruj raport</span>
+          <span class="arrow-circle">→</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Scroll-Up Progress Ring Pill -->
+  <button id="scroll-up-fab" class="scroll-up-fab" type="button" aria-label="Przewiń na górę strony">
+    <svg class="scroll-ring-svg" width="36" height="36" viewBox="0 0 36 36" aria-hidden="true">
+      <circle class="scroll-ring-bg" cx="18" cy="18" r="15" fill="none" stroke-width="2.5"></circle>
+      <circle id="scroll-ring-circle" class="scroll-ring-fg" cx="18" cy="18" r="15" fill="none" stroke-width="2.5" stroke-dasharray="94.25" stroke-dashoffset="94.25"></circle>
+    </svg>
+    <span class="scroll-up-arrow" aria-hidden="true">↑</span>
+    <span class="scroll-up-text">Top</span>
+  </button>
+
+  <script src="./js/ui-enhancements.js?v=4" defer></script>
+  <script type="module" src="./js/app.js?v=gencode13"></script>
+</body>
+</html>
