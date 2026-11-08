@@ -308,6 +308,7 @@ class ClinicalGeneticsWorkspace {
     // Role entry (?role=clinician | ?role=patient): no demo case is preloaded
     if (installRoles(this, { CASES_DATA })) {
       this.setAudienceMode(this.audienceMode, false);
+      document.documentElement.classList.remove('gc-booting');
       return;
     }
     this.loadCase(CASES_DATA[initialCaseId], false);
