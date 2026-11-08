@@ -122,7 +122,9 @@ function analyzeOfflineGeneralGenetics({ text }) {
   const isXLinked = /DMD|Duchenne|FMR1|łamliwego X|hemofili|sprzężon/i.test(input);
   const isCytogenetic = Boolean(karyotypeMatch) || /kariotyp|poronień|poronienia|aberracj|chromosom/i.test(input);
 
-  const gene = geneMatch ? geneMatch[1].toUpperCase() : (karyotypeMatch ? karyotypeMatch[0] : "Gen / Locus");
+  // Any HGNC-style symbol written as "gen(u/ie) XYZ" / "gene XYZ" / "XYZ:c." is accepted, not only the built-in list
+  const genericGene = input.match(/\bgen(?:u|ie|e)?\s+([A-Z][A-Z0-9-]{1,11})\b/) || input.match(/\b([A-Z][A-Z0-9-]{1,11}):\s?(?:NM_|c\.)/);
+  const gene = geneMatch ? geneMatch[1].toUpperCase() : genericGene ? genericGene[1] : (karyotypeMatch ? karyotypeMatch[0] : "Gen / Locus");
   const hgvs_c = hgvsCMatch ? hgvsCMatch[0] : (karyotypeMatch ? "Kariotyp / Rearanżacja" : "Wariant z opisu klinicznego");
   const hgvs_p = hgvsPMatch ? hgvsPMatch[0] : "";
 

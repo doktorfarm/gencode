@@ -167,7 +167,40 @@
     update();
   }
 
-  const init = () => { initCaseMenu(); initViz(); initTableLabels(); initScrollSpy(); };
+  /* ---------------- 5. Accessible modals: focus in, Tab trap, Escape, focus back ---------------- */
+  function initModals() {
+    const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+    const isOpen = (m) => !m.classList.contains('hidden') && !m.hidden;
+    document.querySelectorAll('.modal-backdrop').forEach((modal) => {
+      let returnTo = null;
+      new MutationObserver(() => {
+        if (isOpen(modal)) {
+          if (!returnTo) returnTo = document.activeElement;
+          const first = [...modal.querySelectorAll(FOCUSABLE)].find((el) => el.offsetParent !== null);
+          setTimeout(() => (modal.querySelector('textarea, input:not([type=hidden])') || first)?.focus(), 30);
+        } else if (returnTo) {
+          returnTo.focus?.();
+          returnTo = null;
+        }
+      }).observe(modal, { attributes: true, attributeFilter: ['class', 'hidden'] });
+      modal.addEventListener('keydown', (e) => {
+        if (!isOpen(modal)) return;
+        if (e.key === 'Escape') {
+          e.preventDefault();
+          (modal.querySelector('.modal-close') || modal.querySelector('[data-close-share]'))?.click();
+          return;
+        }
+        if (e.key !== 'Tab') return;
+        const items = [...modal.querySelectorAll(FOCUSABLE)].filter((el) => el.offsetParent !== null);
+        if (!items.length) return;
+        const firstEl = items[0], lastEl = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === firstEl) { e.preventDefault(); lastEl.focus(); }
+        else if (!e.shiftKey && document.activeElement === lastEl) { e.preventDefault(); firstEl.focus(); }
+      });
+    });
+  }
+
+  const init = () => { initCaseMenu(); initViz(); initTableLabels(); initScrollSpy(); initModals(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

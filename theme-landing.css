@@ -609,3 +609,26 @@ body[data-role="patient"] .gc-pcard.is-collapsed .pcard-body::after { display: n
   .gc-share-open .btn-accent-pill { justify-content: center; }
 }
 body[data-role="patient"] #active-case-subtitle { display: none; }
+
+/* =====================================================================
+   v6 — Accessibility (WCAG 2.1 AA) & production polish
+   ===================================================================== */
+:root { --status-danger: #B91C1C; --status-warning: #B45309; }
+.gc-sr-only { position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.gc-skip { position: absolute; left: 12px; top: -60px; z-index: 200; background: #fff; color: var(--gc-ink); padding: 10px 16px; border-radius: 10px; font-weight: 600; box-shadow: var(--shadow-card); text-decoration: none; }
+.gc-skip:focus { top: 12px; }
+#main:focus { outline: none; }
+.gc-noscript { margin: 16px; padding: 14px 16px; border-radius: 12px; background: #FEF2F2; color: #991B1B; font-weight: 600; }
+/* Contrast: badge text darkened to ≥ 4.5:1 on its tint */
+body.mydna-body .badge-indigo { color: #1E40AF; }
+body.mydna-body .badge-amber { color: #92400E; }
+body.mydna-body .badge-danger { color: #991B1B; }
+body.mydna-body .badge-teal { color: #115E59; }
+/* Visible keyboard focus everywhere */
+body.mydna-body :focus-visible { outline: 3px solid #6A3DFF; outline-offset: 2px; border-radius: 8px; }
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  body.mydna-body *, body.mydna-body *::before, body.mydna-body *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+body.mydna-body .domain-seg.lost span, body.mydna-body .domain-seg.lost small { color: #991B1B; }
+body[data-role="patient"] .gc-role-badge { background: #047857; }

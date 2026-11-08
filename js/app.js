@@ -12,7 +12,8 @@
 import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode12';
 import { renderPedigreeSVG } from './pedigree.js?v=gencode13';
 import { analyzeClinicalCase } from './analyzer.js?v=gencode8';
-import { installRoles } from './roles.js?v=1';
+import { installRoles } from './roles.js?v=3';
+import { sanitizeUntrustedCase } from './sanitize.js?v=1';
 
 const LANG_STORAGE_KEY = 'gencode_lang_v1';
 const SESSION_STORAGE_KEY = 'gencode_session_v1';
@@ -699,7 +700,7 @@ class ClinicalGeneticsWorkspace {
       });
       this.closeCaseModal();
       if (this.onCaseAnalyzed) this.onCaseAnalyzed(analyzedCase);
-      else this.loadCase(analyzedCase, true);
+      else this.loadCase(sanitizeUntrustedCase(analyzedCase), true);
     } catch (err) {
       console.error('Case analysis fallback:', err);
       if (this.role) {

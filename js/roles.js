@@ -7,6 +7,8 @@
  * Bez parametru role aplikacja działa jak dotąd (przypadki demonstracyjne z linków ?case=…).
  */
 
+import { sanitizeUntrustedCase } from './sanitize.js?v=1';
+
 const MY_CASES_KEY = 'gencode_my_cases_v1';
 const ROLE_KEY = 'gencode_role_v1';
 
@@ -66,6 +68,7 @@ async function encodeCase(obj) {
 }
 
 async function decodeCase(payload) {
+  if (!payload || payload.length > 400000) throw new Error('payload too large');
   const kind = payload[0];
   const bytes = fromB64url(payload.slice(1));
   let text;
@@ -92,15 +95,15 @@ function patientSubset(c) {
       : undefined,
     patientReport: c.patientReport,
     patientCard: c.patientCard,
-    pedigreeMembers: c.pedigreeMembers,
-    simulator: c.simulator
+    pedigreeMembers: c.pedigreeMembers
   };
 }
 
 /* ---------------- storage ---------------- */
 const readMyCases = () => {
   try {
-    return JSON.parse(localStorage.getItem(MY_CASES_KEY)) || [];
+    const list = JSON.parse(localStorage.getItem(MY_CASES_KEY)) || [];
+    return Array.isArray(list) ? list.map(sanitizeUntrustedCase) : [];
   } catch (e) {
     return [];
   }
@@ -208,7 +211,8 @@ export function installRoles(app, { CASES_DATA }) {
     }
   };
 
-  app.onCaseAnalyzed = (c) => {
+  app.onCaseAnalyzed = (raw) => {
+    const c = sanitizeUntrustedCase(raw);
     if (!c.id) c.id = 'custom_' + Date.now();
     const list = readMyCases().filter((x) => x.id !== c.id);
     list.unshift(c);
@@ -260,7 +264,7 @@ export function installRoles(app, { CASES_DATA }) {
 
   /* ---------- patient: open a shared report ---------- */
   const openFromPayload = async (payload) => {
-    const c = await decodeCase(payload);
+    const c = sanitizeUntrustedCase(await decodeCase(payload));
     if (!c || !c.patientReport) throw new Error('not a report');
     openCase(c, false);
     try {
@@ -289,7 +293,8 @@ export function installRoles(app, { CASES_DATA }) {
     if (!f) return;
     try {
       patientError(false);
-      const c = JSON.parse(await f.text());
+      if (f.size > 2_000_000) throw new Error('too large');
+      const c = sanitizeUntrustedCase(JSON.parse(await f.text()));
       if (!c.patientReport) throw new Error('not a report');
       openCase(c, false);
     } catch (err) {

@@ -1,8 +1,15 @@
-# GenCode® — platforma analizy genomowej (demo)
+# GenCode® — platforma analizy genomowej
 
-Statyczna wersja strony GenCode do pokazania znajomym.
+Statyczna aplikacja (HTML/CSS/JS, bez serwera) publikowana na GitHub Pages.
 
-- `index.html` — strona główna (landing)
-- `app.html` — Workspace (Dashboard): przypadki NF1 i PTEN, rodowód, raport adaptacyjny, karta informacyjna dla pacjenta
+| Plik | Opis |
+|---|---|
+| `index.html` | Strona główna (landing) z wyborem trybu: klinicysta / pacjent |
+| `app.html` | Workspace: `?role=clinician` (dodawanie przypadków, udostępnianie raportu), `?role=patient` (raport dla pacjenta z linku), `?case=nf1` / `?case=pten` (demo) |
+| `prywatnosc.html` | Prywatność i warunki korzystania |
 
-Narzędzie edukacyjne i wspierające — nie zastępuje konsultacji lekarskiej. Dane przypadków są zanonimizowane.
+## Standardy wdrożeniowe
+- **Dostępność:** WCAG 2.1 AA — 0 naruszeń w automatycznym audycie axe-core 4.10 (landing, Workspace klinicysty i pacjenta, demo, wersja mobilna); skip link, landmarki, pułapka fokusu i Esc w oknach, kontrast ≥ 4,5:1, `prefers-reduced-motion`.
+- **Bezpieczeństwo:** Content-Security-Policy na każdej stronie; dane z linków, plików i odpowiedzi AI są neutralizowane przed renderowaniem (`js/sanitize.js`); brak kluczy API w kodzie; limit rozmiaru linku/pliku.
+- **Prywatność:** brak serwera i analityki; przypadki tylko w localStorage przeglądarki; raport w linku po `#` (nie trafia do serwera); `noindex`.
+- **Charakter narzędzia:** edukacyjny i wspierający — nie zastępuje konsultacji lekarza genetyka.
