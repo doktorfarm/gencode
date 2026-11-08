@@ -76,10 +76,6 @@
             <span>🧠</span>
             <span data-i18n="tpl_nf1_short">Przypadek 1: NF1 (RASopatie)</span>
           </button>
-          <button type="button" class="mydna-case-chip" data-load-case="pten">
-            <span>🧩</span>
-            <span data-i18n="tpl_pten_short">Przypadek 2: PTEN (zespół Cowdena)</span>
-          </button>
         </div>
         </details>
 
@@ -222,15 +218,8 @@
                     <circle cx="11" cy="11" r="7"/>
                     <path d="M20 20l-3.5-3.5"/>
                   </svg>
-                  <input id="mydna-search-input" type="search" placeholder="Szukaj genu, HGVS lub krewnego (np. I-1, NF1, PTEN)..." autocomplete="off" />
+                  <input id="mydna-search-input" type="search" placeholder="Szukaj genu, HGVS lub krewnego (np. I-1, NF1, c.3525)..." autocomplete="off" />
                 </label>
-
-                <button type="button" class="mydna-bell-btn" id="btn-trigger-case-switch" title="Przełącz przypadek (NF1 ↔ PTEN)">
-                  <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="2">
-                    <path d="M16 3h5v5M4 20L21 3M21 16v5h-5M15 15l6 6M4 4l5 5"/>
-                  </svg>
-                  <span class="mydna-bell-dot"></span>
-                </button>
               </div>
             </div>
 
@@ -1015,9 +1004,6 @@
           <button type="button" class="quick-case-pill" data-load-case="nf1">
             🧠 Przypadek 1: NF1 — nerwiakowłókniakowatość typu 1 (panel RASopatii)
           </button>
-          <button type="button" class="quick-case-pill" data-load-case="pten">
-            🧩 Przypadek 2: PTEN — zespół Cowdena / PHTS
-          </button>
         </div>
       </div>
 
@@ -1073,7 +1059,7 @@
   </button>
 
   <script src="./js/ui-enhancements.js?v=6" defer></script>
-  <script type="module" src="./js/app.js?v=gencode19"></script>
+  <script type="module" src="./js/app.js?v=gencode20"></script>
   <!-- Share report with patient -->
   <div id="share-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
     <div class="modal-dialog gc-share-dialog">

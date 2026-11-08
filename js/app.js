@@ -9,7 +9,7 @@
  * - Clearly separates Observed Findings vs. Inferred Interpretations, Pathogenicity vs. Diagnosis, and Uncertainty
  */
 
-import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode12';
+import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode13';
 import { renderPedigreeSVG } from './pedigree.js?v=gencode13';
 import { analyzeClinicalCase, aiProxyEnabled, aiRemaining, AiProxyError } from './analyzer.js?v=gencode10';
 const AI_CODE_KEY = 'gencode_ai_code_v1';
@@ -65,7 +65,6 @@ const UI_TRANSLATIONS = {
     lvl3_mol_kicker: 'DIAGNOSTYKA MOLEKULARNA • HGVS / ACMG / GRCh38',
     lvl3_sci_kicker: 'BAZY POPULACYJNE I STRUKTURA BIAŁKA 3D',
     tpl_nf1_short: 'Przypadek 1: NF1 (RASopatie)',
-    tpl_pten_short: 'Przypadek 2: PTEN (zespół Cowdena)',
     pcard_print: 'Drukuj kartę',
     report_heading: 'Raport adaptacyjny',
     level1_pill: 'POZIOM 1 • KLUCZOWE WNIOSKI I INTEGRALNOŚĆ KLINICZNA',
@@ -173,7 +172,6 @@ const UI_TRANSLATIONS = {
     lvl3_mol_kicker: 'MOLECULAR DIAGNOSTICS • HGVS / ACMG / GRCh38',
     lvl3_sci_kicker: 'POPULATION DATA & 3D PROTEIN STRUCTURE',
     tpl_nf1_short: 'Case 1: NF1 (RASopathies)',
-    tpl_pten_short: 'Case 2: PTEN (Cowden syndrome)',
     pcard_print: 'Print sheet',
     report_heading: 'Adaptive report',
     level1_pill: 'LEVEL 1 • KEY FINDINGS & CLINICAL INTEGRITY',
@@ -574,8 +572,6 @@ class ClinicalGeneticsWorkspace {
 
         if (q.includes('nf1') || q.includes('neurofib') || q.includes('3525') || q.includes('rasop')) {
           this.loadCase(CASES_DATA.nf1, false);
-        } else if (q.includes('pten') || q.includes('cowden') || q.includes('955') || q.includes('phts')) {
-          this.loadCase(CASES_DATA.pten, false);
         } else {
           this.openCaseModal();
           const customTxt = document.getElementById('custom-case-textarea');
@@ -850,8 +846,6 @@ class ClinicalGeneticsWorkspace {
       bcCase.textContent =
         caseData.id === 'cftr_ar'
           ? 'Przypadek 2 (CFTR F508del/G542X)'
-          : caseData.id === 'pten'
-          ? 'Przypadek 2 (PTEN c.955_958del)'
           : caseData.id === 'nf1'
           ? 'Przypadek 1 (NF1 c.3525_3526del)'
           : caseData.id === 'zestaw11'
