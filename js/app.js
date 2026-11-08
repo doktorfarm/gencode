@@ -49,6 +49,7 @@ const UI_TRANSLATIONS = {
     ai_err_limit: "Dzienny limit analiz AI został wykorzystany ({m}). Usuń kod, aby użyć analizy lokalnej, albo spróbuj jutro.",
     ai_err_network: "Brak połączenia z silnikiem AI. Sprawdź internet albo usuń kod, aby użyć analizy lokalnej.",
     ai_err_image: "Zdjęcie jest za duże lub ma nieobsługiwany format (JPG, PNG, WEBP, maks. 4 MB).",
+    ai_err_busy: "Model AI jest chwilowo przeciążony. Spróbuj ponownie za minutę — ta próba nie została policzona do limitu.",
     ai_err_upstream: "Silnik AI nie zwrócił poprawnej odpowiedzi. Spróbuj ponownie za chwilę lub skróć opis.",
     fb_btn: "Zgłoś uwagę",
     fb_kicker: "WERSJA TESTOWA",
@@ -156,6 +157,7 @@ const UI_TRANSLATIONS = {
     ai_err_limit: "Today's AI analysis limit has been used ({m}). Clear the code to use the local analysis, or try tomorrow.",
     ai_err_network: "Cannot reach the AI engine. Check your connection, or clear the code to use the local analysis.",
     ai_err_image: "The image is too large or in an unsupported format (JPG, PNG, WEBP, max 4 MB).",
+    ai_err_busy: "The AI model is temporarily overloaded. Try again in a minute — this attempt was not counted.",
     ai_err_upstream: "The AI engine did not return a valid answer. Try again shortly or shorten the description.",
     fb_btn: "Send feedback",
     fb_kicker: "TEST VERSION",
@@ -725,7 +727,7 @@ class ClinicalGeneticsWorkspace {
 
   aiErrorMessage(err) {
     const dict = UI_TRANSLATIONS[this.lang];
-    const map = { bad_code: dict.ai_err_bad_code, limit: dict.ai_err_limit, network: dict.ai_err_network, image: dict.ai_err_image };
+    const map = { bad_code: dict.ai_err_bad_code, limit: dict.ai_err_limit, network: dict.ai_err_network, image: dict.ai_err_image, busy: dict.ai_err_busy };
     return (map[err.code] || dict.ai_err_upstream).replace('{n}', 0).replace('{m}', err.limit ?? '');
   }
 
