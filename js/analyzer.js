@@ -32,6 +32,18 @@ export async function aiRemaining(accessCode) {
   } catch (e) { return null; }
 }
 
+// The proxy asks the model for Polish only (faster); empty "en" values fall back to Polish
+function fillEnglish(node) {
+  if (Array.isArray(node)) { node.forEach(fillEnglish); return; }
+  if (!node || typeof node !== 'object') return;
+  if ('pl' in node && 'en' in node) {
+    if (Array.isArray(node.pl) && (!Array.isArray(node.en) || !node.en.length || node.en.every((x) => !x))) node.en = node.pl.slice();
+    else if (typeof node.pl === 'string' && !node.en) node.en = node.pl;
+  }
+  if (typeof node.actionPl === 'string' && !node.actionEn) node.actionEn = node.actionPl;
+  Object.values(node).forEach(fillEnglish);
+}
+
 async function analyzeWithProxy({ text, imageBase64, imageMimeType, accessCode }) {
   let r;
   try {
@@ -43,19 +55,46 @@ async function analyzeWithProxy({ text, imageBase64, imageMimeType, accessCode }
   } catch (e) {
     throw new AiProxyError('network');
   }
-  let j = {};
-  try { j = await r.json(); } catch (e) { /* non-JSON */ }
-  if (!r.ok) throw new AiProxyError(j.error || 'upstream', { remaining: j.remaining, limit: j.limit });
-  const cleaned = String(j.output_text || '').replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+  if (!r.ok) {
+    let j = {};
+    try { j = await r.json(); } catch (e) { /* non-JSON */ }
+    throw new AiProxyError(j.error || 'upstream', { remaining: j.remaining, limit: j.limit });
+  }
+  // Streamed NDJSON: {"t":"chunk"} … {"done":true,"remaining":n} | {"error":"…"}
+  let out = '', meta = null, buf = '';
+  const handle = (line) => {
+    if (!line.trim()) return;
+    let ev; try { ev = JSON.parse(line); } catch (e) { return; }
+    if (typeof ev.t === 'string') out += ev.t;
+    else meta = ev;
+  };
+  try {
+    const reader = r.body.getReader();
+    const dec = new TextDecoder();
+    for (;;) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let i;
+      while ((i = buf.indexOf('\n')) >= 0) { handle(buf.slice(0, i)); buf = buf.slice(i + 1); }
+    }
+    handle(buf);
+  } catch (e) {
+    throw new AiProxyError('network');
+  }
+  if (!meta || meta.error) throw new AiProxyError((meta && meta.error) || 'upstream', { remaining: meta && meta.remaining });
+  const cleaned = out.replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
   let parsed;
-  try { parsed = JSON.parse(cleaned); } catch (e) { throw new AiProxyError('bad_output', { remaining: j.remaining }); }
+  try { parsed = JSON.parse(cleaned); } catch (e) { throw new AiProxyError('bad_output', { remaining: meta.remaining }); }
+  fillEnglish(parsed);
+  parsed.rawText = { pl: text || '', en: text || '' };
+  parsed._aiRemaining = meta.remaining;
   parsed.id = "custom_" + Date.now();
   parsed.questions = {
     q1: { pl: "1. Rodowód kliniczny", en: "1. Clinical Pedigree" },
     q2: { pl: "2. Rozpoznanie genetyczne i mechanizm dziedziczenia", en: "2. Genetic Diagnosis & Inheritance Mechanism" },
     q3: { pl: "3. Postępowanie diagnostyczne u członków rodziny", en: "3. Family Diagnostic Management" }
   };
-  parsed._aiRemaining = j.remaining;
   return parsed;
 }
 

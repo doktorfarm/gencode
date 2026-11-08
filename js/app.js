@@ -11,7 +11,7 @@
 
 import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode12';
 import { renderPedigreeSVG } from './pedigree.js?v=gencode13';
-import { analyzeClinicalCase, aiProxyEnabled, aiRemaining, AiProxyError } from './analyzer.js?v=gencode9';
+import { analyzeClinicalCase, aiProxyEnabled, aiRemaining, AiProxyError } from './analyzer.js?v=gencode10';
 const AI_CODE_KEY = 'gencode_ai_code_v1';
 import { installRoles } from './roles.js?v=3';
 import { sanitizeUntrustedCase } from './sanitize.js?v=1';
@@ -754,7 +754,9 @@ class ClinicalGeneticsWorkspace {
     }
 
     if (runBtnLabel) {
-      runBtnLabel.textContent = this.lang === 'pl' ? 'Analizowanie przypadku...' : 'Analyzing case...';
+      runBtnLabel.textContent = accessCode
+        ? (this.lang === 'pl' ? 'Analiza AI w toku… (do 1–2 min)' : 'AI analysis running… (up to 1–2 min)')
+        : (this.lang === 'pl' ? 'Analizowanie przypadku...' : 'Analyzing case...');
     }
 
     try {
