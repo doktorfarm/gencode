@@ -632,3 +632,37 @@ body.mydna-body :focus-visible { outline: 3px solid #6A3DFF; outline-offset: 2px
 }
 body.mydna-body .domain-seg.lost span, body.mydna-body .domain-seg.lost small { color: #991B1B; }
 body[data-role="patient"] .gc-role-badge { background: #047857; }
+
+/* ===================== v7 · Test phase: badge + feedback ===================== */
+.gc-test-badge { display: inline-flex; align-items: center; height: 24px; padding: 0 9px; border-radius: 999px; font-size: 11px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; background: rgba(251, 191, 36, .16); color: #FCD34D; border: 1px solid rgba(251, 191, 36, .45); margin-right: 6px; white-space: nowrap; }
+.gc-feedback-btn { display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 12px; border-radius: 999px; font: 600 12.5px/1 Inter, system-ui, sans-serif; color: #FDE68A; background: rgba(251, 191, 36, .1); border: 1px solid rgba(251, 191, 36, .4); cursor: pointer; white-space: nowrap; }
+.gc-feedback-btn:hover { background: rgba(251, 191, 36, .2); color: #FFFFFF; }
+.gc-fb-label { display: block; font-weight: 600; font-size: .86rem; margin-bottom: 6px; color: var(--text-primary, #0B1226); }
+#feedback-text { width: 100%; min-height: 120px; resize: vertical; }
+.gc-fb-ctx { font-size: .8rem; color: var(--text-secondary, #4B5270); margin: 10px 0 4px; line-height: 1.5; }
+.gc-fb-warn { font-size: .8rem; color: #92400E; margin: 0 0 12px; font-weight: 600; }
+#feedback-status:empty { display: none; }
+@media (max-width: 680px) {
+  .gc-test-badge { height: 20px; padding: 0 7px; font-size: 9.5px; }
+  .gc-feedback-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .gc-feedback-btn { padding: 0 10px; }
+}
+@media print { .gc-test-badge, .gc-feedback-btn { display: none !important; } }
+.gc-modal-h { font-family: var(--font-display, Inter, sans-serif); font-size: 1.25rem; font-weight: 800; letter-spacing: -0.01em; margin: 0; }
+.gc-role-badge[hidden] { display: none !important; }
+body.mydna-body .mydna-back-lp-pill, body.mydna-body #btn-open-case-modal { white-space: nowrap; }
+@media (max-width: 1540px) and (min-width: 681px) { body.mydna-body .gc-breadcrumbs { display: none; } }
+@media (max-width: 1280px) and (min-width: 761px) {
+  body.mydna-body .mydna-back-lp-pill span:last-child,
+  body.mydna-body .gc-case-menu-k { display: none; }
+  body.mydna-body .gc-feedback-btn span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  body.mydna-body .gc-feedback-btn { padding: 0 10px; }
+}
+@media (max-width: 960px) and (min-width: 761px) {
+  body.mydna-body .mydna-utility-bar { flex-wrap: wrap; row-gap: 10px; }
+  body.mydna-body .mydna-util-right { flex: 1 1 100%; justify-content: space-between; gap: 8px; }
+  body.mydna-body .gc-case-menu { flex: 1; min-width: 0; }
+  body.mydna-body .gc-case-menu > summary { width: 100%; }
+  body.mydna-body .gc-case-menu-cur { flex: 1; max-width: none; }
+}
+@media (min-width: 900px) and (max-width: 960px) { body.mydna-body .diagnostic-table thead th { top: 128px; } }

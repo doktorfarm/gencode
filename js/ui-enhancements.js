@@ -3,6 +3,7 @@
  *  1. Case menu: compact "Przypadek ▾" dropdown that mirrors the active case chip
  *  2. Overview mini-visualisations derived from the real card values (no decorative trends)
  *  3. Recommendation table: per-cell labels so rows become cards on mobile
+ *  4–5. Scroll-spy, accessible modals · 6. Test-phase feedback (mailto)
  */
 (function () {
   'use strict';
@@ -200,7 +201,101 @@
     });
   }
 
-  const init = () => { initCaseMenu(); initViz(); initTableLabels(); initScrollSpy(); initModals(); };
+
+  /* ---------------- 6. Test feedback: "Zgłoś uwagę" → ready mailto ---------------- */
+  const FEEDBACK_TO = 'krzysztofgolackifarm@gumed.edu.pl';
+  const FB = {
+    pl: { subj: 'GenCode – uwaga z testów', note: 'Uwaga', ctx: 'Kontekst', cs: 'Przypadek', none: 'brak (pusty Workspace)',
+          role: 'Wejście', view: 'Widok', sec: 'Sekcja', url: 'Adres', date: 'Data', lang: 'Język', screen: 'Ekran',
+          roles: { clinician: 'klinicysta', patient: 'pacjent', demo: 'demo' },
+          views: { clinical: 'kliniczny', research: 'badawczy', patient: 'pacjent' },
+          copied: 'Skopiowano treść — wklej ją do e-maila na adres ' + FEEDBACK_TO + '.', copyFail: 'Nie udało się skopiować — zaznacz tekst ręcznie.',
+          opened: 'Otwieram program pocztowy… Jeśli nic się nie stało, użyj „Kopiuj treść”.', empty: 'Wpisz najpierw treść uwagi.' },
+    en: { subj: 'GenCode – test feedback', note: 'Feedback', ctx: 'Context', cs: 'Case', none: 'none (empty Workspace)',
+          role: 'Entry', view: 'View', sec: 'Section', url: 'URL', date: 'Date', lang: 'Language', screen: 'Screen',
+          roles: { clinician: 'clinician', patient: 'patient', demo: 'demo' },
+          views: { clinical: 'clinical', research: 'research', patient: 'patient' },
+          copied: 'Text copied — paste it into an e-mail to ' + FEEDBACK_TO + '.', copyFail: 'Copy failed — please select the text manually.',
+          opened: 'Opening your mail app… If nothing happens, use "Copy text".', empty: 'Please type your feedback first.' }
+  };
+
+  function initFeedback() {
+    const btn = document.getElementById('btn-feedback');
+    const modal = document.getElementById('feedback-modal');
+    if (!btn || !modal) return;
+    const ta = document.getElementById('feedback-text');
+    const ctxEl = document.getElementById('feedback-ctx');
+    const send = document.getElementById('feedback-send');
+    const copy = document.getElementById('feedback-copy');
+    const status = document.getElementById('feedback-status');
+    const t = () => FB[lang()];
+
+    const context = () => {
+      const L = t();
+      const app = window.clinicalApp;
+      const c = app && app.activeCase;
+      const title = c && c.title ? (c.title[lang()] || c.title.pl || c.id) : '';
+      const hasCase = c && !document.body.classList.contains('gc-no-case');
+      const role = document.body.dataset.role || 'demo';
+      const view = document.body.dataset.audience || (app && app.audienceMode) || '';
+      const sec = (document.getElementById('bc-module-name') || {}).textContent || '';
+      const u = new URL(location.href);
+      u.hash = u.hash.startsWith('#r=') ? '#r=…' : u.hash;
+      return [
+        [L.cs, hasCase ? String(title).slice(0, 140) : L.none],
+        [L.role, L.roles[role] || role],
+        [L.view, L.views[view] || view],
+        [L.sec, sec.trim()],
+        [L.url, u.toString().slice(0, 200)],
+        [L.screen, window.innerWidth + '×' + window.innerHeight],
+        [L.date, new Date().toISOString().slice(0, 16).replace('T', ' ')]
+      ];
+    };
+    const body = (max = 1200) => {
+      const L = t();
+      const ctx = context().map(([k, v]) => k + ': ' + v).join('\n');
+      const note = ta.value.trim();
+      const cut = note.length > max ? note.slice(0, max) + ' […]' : note;
+      return L.note + ':\n' + cut + '\n\n— ' + L.ctx + ' —\n' + ctx;
+    };
+    // Keep the mailto URL under ~1900 chars (Outlook / some webmail limits); full text stays available via "Copy"
+    const mailto = () => {
+      const L = t();
+      const head = 'mailto:' + FEEDBACK_TO + '?subject=' + encodeURIComponent(L.subj) + '&body=';
+      let max = 1200, href;
+      do { href = head + encodeURIComponent(body(max)); max = Math.floor(max * 0.8); } while (href.length > 1900 && max > 40);
+      return href;
+    };
+    const update = () => {
+      const L = t();
+      ctxEl.textContent = context().filter(([k]) => k !== L.url && k !== L.screen && k !== L.date).map(([k, v]) => k + ': ' + v).join(' · ');
+      send.href = mailto();
+    };
+    const open = () => {
+      status.textContent = '';
+      update();
+      modal.classList.remove('hidden');
+    };
+    const close = () => modal.classList.add('hidden');
+
+    btn.addEventListener('click', open);
+    modal.querySelectorAll('[data-close-feedback]').forEach((b) => b.addEventListener('click', close));
+    modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
+    ta.addEventListener('input', () => { if (status.textContent === t().empty) status.textContent = ''; update(); });
+    send.addEventListener('click', (e) => {
+      if (!ta.value.trim()) { e.preventDefault(); status.textContent = t().empty; ta.focus(); return; }
+      update();
+      status.textContent = t().opened;
+    });
+    copy.addEventListener('click', async () => {
+      if (!ta.value.trim()) { status.textContent = t().empty; ta.focus(); return; }
+      const text = t().subj + '\n\n' + body();
+      try { await navigator.clipboard.writeText(text); status.textContent = t().copied; }
+      catch (err) { status.textContent = t().copyFail; }
+    });
+  }
+
+  const init = () => { initCaseMenu(); initViz(); initTableLabels(); initScrollSpy(); initModals(); initFeedback(); };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
 })();

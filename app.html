@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=gencode9" />
-  <link rel="stylesheet" href="./theme-landing.css?v=6" />
+  <link rel="stylesheet" href="./theme-landing.css?v=7" />
 </head>
 <body class="mydna-body" data-scroll-dir="down">
   <!-- Top Scroll Progress Bar -->
@@ -46,6 +46,7 @@
           <svg viewBox="0 0 64 64" fill="none" aria-hidden="true"><defs><linearGradient id="gcn1" x1="10" y1="6" x2="54" y2="58" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3B82F6"/><stop offset=".55" stop-color="#5B4BF0"/><stop offset="1" stop-color="#8B6BFF"/></linearGradient><radialGradient id="gcn2" cx="35%" cy="30%" r="70%"><stop offset="0" stop-color="#B8A6FF"/><stop offset="1" stop-color="#6A3DFF"/></radialGradient></defs><path d="M35 8C39.97 8 44 12.03 44 17C44 20.4 42.1 23.35 39.3 24.88C34.2 27.65 30.8 30.1 29.8 32.8C29.1 34.7 31.8 37.2 37.8 38.6C40.1 37.2 42.8 36.5 45.5 36.8C50.4 37.4 54.2 41.6 54 46.6C53.8 51.8 49.4 55.9 44.2 55.6C39.6 55.3 36 51.7 35.5 47.2C34.8 41.2 30.5 39.2 26.2 42.5L21.5 47.2C20.2 48.5 18.2 48.2 17.4 46.8C16.7 45.6 17.2 44.1 18.5 43.1L23.5 38.8C26.5 36.1 25.5 31.8 20.2 30.2C18.2 31.1 15.9 31.5 13.5 31.1C8.3 30.2 4.8 25.2 5.7 20C6.6 14.8 11.6 11.3 16.8 12.2C20.2 12.8 22.9 15.1 24.1 18.1C25.8 22.2 29.5 22.1 31.8 18.2C31.2 16.9 31 15.5 31.2 14C31.7 10.5 33.1 8 35 8Z" fill="url(#gcn1)"/><circle cx="12.5" cy="52.5" r="7.5" fill="url(#gcn2)"/></svg>
           <b>GenCode<sup>®</sup></b>
         </a>
+        <span class="gc-test-badge" data-i18n="test_badge" title="Wersja testowa — dane wyłącznie przykładowe lub zanonimizowane">Wersja testowa</span>
         <span class="gc-role-badge" id="gc-role-badge" hidden></span>
         <a href="./index.html" class="mydna-back-lp-pill" title="Powrót na stronę informacyjną GenCode®">
           <span>←</span>
@@ -84,6 +85,11 @@
 
         <button id="btn-open-case-modal" class="btn-accent-pill" type="button" style="padding: 7px 15px; font-size: 0.76rem;">
           <span data-i18n="btn_add_case_top">+ Nowy przypadek</span>
+        </button>
+
+        <button id="btn-feedback" class="gc-feedback-btn" type="button" aria-haspopup="dialog">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          <span data-i18n="fb_btn">Zgłoś uwagę</span>
         </button>
 
         <div class="lang-switch" role="group" aria-label="Language switch">
@@ -994,9 +1000,9 @@
       <div class="modal-header">
         <div>
           <span class="section-eyebrow" style="margin-bottom:6px;">MODUŁ SAMPLES &amp; CASES • GENCODE®</span>
-          <h3 id="case-modal-title" style="font-family:var(--font-display); font-size:1.25rem; font-weight:800;">
+          <h2 id="case-modal-title" style="font-family:var(--font-display); font-size:1.25rem; font-weight:800;">
             Wybierz lub wprowadź przypadek kliniczny do analizy
-          </h3>
+          </h2>
         </div>
         <button id="btn-close-case-modal" class="modal-close" type="button" aria-label="Zamknij">✕</button>
       </div>
@@ -1067,15 +1073,15 @@
     <span class="scroll-up-text">Top</span>
   </button>
 
-  <script src="./js/ui-enhancements.js?v=5" defer></script>
-  <script type="module" src="./js/app.js?v=gencode15"></script>
+  <script src="./js/ui-enhancements.js?v=6" defer></script>
+  <script type="module" src="./js/app.js?v=gencode16"></script>
   <!-- Share report with patient -->
   <div id="share-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
     <div class="modal-dialog gc-share-dialog">
       <div class="modal-header">
         <div>
           <span class="section-eyebrow" style="margin-bottom:6px;" data-i18n="share_kicker">RAPORT DLA PACJENTA</span>
-          <h3 id="share-modal-title" data-i18n="share_title">Udostępnij raport pacjentowi</h3>
+          <h2 id="share-modal-title" class="gc-modal-h" data-i18n="share_title">Udostępnij raport pacjentowi</h2>
         </div>
         <button class="modal-close" type="button" data-close-share aria-label="Zamknij">✕</button>
       </div>
@@ -1089,6 +1095,30 @@
         </div>
       </div>
       <p class="gc-empty-note"><span data-i18n="share_note">Wyślij link bezpośrednio pacjentowi (np. e-mailem). Każdy, kto ma link, może otworzyć raport.</span> <a href="./prywatnosc.html" target="_blank" rel="noopener">Prywatność</a></p>
+    </div>
+  </div>
+  <div id="feedback-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="feedback-modal-title">
+    <div class="modal-dialog gc-share-dialog">
+      <div class="modal-header">
+        <div>
+          <span class="section-eyebrow" style="margin-bottom:6px;" data-i18n="fb_kicker">WERSJA TESTOWA</span>
+          <h2 id="feedback-modal-title" class="gc-modal-h" data-i18n="fb_title">Zgłoś uwagę</h2>
+        </div>
+        <button class="modal-close" type="button" data-close-feedback aria-label="Zamknij">✕</button>
+      </div>
+      <p class="gc-share-lead" data-i18n="fb_lead">Co nie działa, jest niejasne albo merytorycznie wymaga poprawy? Uwaga otworzy się jako gotowy e-mail do autora.</p>
+      <label for="feedback-text" class="gc-fb-label" data-i18n="fb_label">Twoja uwaga</label>
+      <textarea id="feedback-text" class="form-textarea" rows="5" maxlength="1200"></textarea>
+      <p class="gc-fb-ctx"><span data-i18n="fb_ctx">Do wiadomości dołączymy:</span> <span id="feedback-ctx"></span></p>
+      <p class="gc-fb-warn" data-i18n="fb_warn">Nie wpisuj danych osobowych pacjentów.</p>
+      <div class="gc-share-row">
+        <small class="gc-share-size"><span data-i18n="fb_to">Adresat:</span> <a id="feedback-addr" href="mailto:krzysztofgolackifarm@gumed.edu.pl">krzysztofgolackifarm@gumed.edu.pl</a></small>
+        <div class="gc-share-btns">
+          <button id="feedback-copy" type="button" class="btn-outline-pill" data-i18n="fb_copy">Kopiuj treść</button>
+          <a id="feedback-send" class="btn-accent-pill" href="mailto:krzysztofgolackifarm@gumed.edu.pl" data-i18n="fb_send">Otwórz e-mail</a>
+        </div>
+      </div>
+      <p class="gc-empty-note" id="feedback-status" role="status" aria-live="polite"></p>
     </div>
   </div>
 </body>
