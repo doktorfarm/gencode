@@ -666,3 +666,6 @@ body.mydna-body .mydna-back-lp-pill, body.mydna-body #btn-open-case-modal { whit
   body.mydna-body .gc-case-menu-cur { flex: 1; max-width: none; }
 }
 @media (min-width: 900px) and (max-width: 960px) { body.mydna-body .diagnostic-table thead th { top: 128px; } }
+.gc-ai-box { margin-top: 12px; }
+.gc-ai-status { display: block; margin-top: 6px; font-size: .8rem; color: var(--text-secondary, #4B5270); line-height: 1.45; }
+.gc-ai-status.is-warn { color: #B45309; font-weight: 600; }

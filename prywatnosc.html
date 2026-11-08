@@ -41,8 +41,9 @@ a{color:var(--violet)}:focus-visible{outline:3px solid var(--violet);outline-off
   <section>
     <h2>Analiza z użyciem modelu AI</h2>
     <ul>
-      <li>Bez klucza API analiza działa lokalnie w przeglądarce, w uproszczonym trybie.</li>
-      <li>Jeśli użytkownik poda własny klucz Gemini API, opis przypadku jest wysyłany bezpośrednio do Google (Gemini API) na warunkach umowy użytkownika z Google. Klucz nie jest nigdzie zapisywany.</li>
+      <li>Bez kodu dostępu analiza działa lokalnie w przeglądarce, w uproszczonym trybie — nic nie jest wysyłane.</li>
+      <li>Z kodem dostępu (wersja testowa, kody wydaje autor) opis przypadku i ewentualne zdjęcie są przesyłane przez serwer pośredniczący GenCode (Cloudflare Workers) do modelu Google Gemini. Serwer pośredniczący nie zapisuje treści przypadków — przechowuje jedynie dzienny licznik analiz dla skrótu kodu (usuwany po 48 godzinach).</li>
+      <li>Kod dostępu jest zapamiętywany tylko w tej przeglądarce (localStorage), aby nie trzeba było wpisywać go ponownie.</li>
       <li>Do modelu AI należy wysyłać wyłącznie dane zanonimizowane — bez imion, nazwisk, numerów PESEL, dat urodzenia, adresów i nazw ośrodków.</li>
     </ul>
   </section>

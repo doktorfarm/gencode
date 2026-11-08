@@ -11,7 +11,8 @@
 
 import { CASES_DATA, DEFAULT_CASE_ID } from '../data/cases.js?v=gencode12';
 import { renderPedigreeSVG } from './pedigree.js?v=gencode13';
-import { analyzeClinicalCase } from './analyzer.js?v=gencode8';
+import { analyzeClinicalCase, aiProxyEnabled, aiRemaining, AiProxyError } from './analyzer.js?v=gencode9';
+const AI_CODE_KEY = 'gencode_ai_code_v1';
 import { installRoles } from './roles.js?v=3';
 import { sanitizeUntrustedCase } from './sanitize.js?v=1';
 
@@ -41,6 +42,14 @@ const UI_TRANSLATIONS = {
     share_download: "Pobierz plik raportu",
     share_copy: "Kopiuj link",
     test_badge: "Wersja testowa",
+    ai_code_label: "Kod dostępu do analizy AI (otrzymany od autora)",
+    ai_code_hint: "Bez kodu działa uproszczona analiza lokalna w przeglądarce (bez karty dla pacjenta). Do AI wysyłaj tylko dane zanonimizowane.",
+    ai_remaining: "Kod przyjęty. Pozostało dziś: {n} z {m} analiz AI. Do AI wysyłaj tylko dane zanonimizowane.",
+    ai_err_bad_code: "Nieprawidłowy kod dostępu. Sprawdź kod albo usuń go, aby użyć analizy lokalnej.",
+    ai_err_limit: "Dzienny limit analiz AI został wykorzystany ({m}). Usuń kod, aby użyć analizy lokalnej, albo spróbuj jutro.",
+    ai_err_network: "Brak połączenia z silnikiem AI. Sprawdź internet albo usuń kod, aby użyć analizy lokalnej.",
+    ai_err_image: "Zdjęcie jest za duże lub ma nieobsługiwany format (JPG, PNG, WEBP, maks. 4 MB).",
+    ai_err_upstream: "Silnik AI nie zwrócił poprawnej odpowiedzi. Spróbuj ponownie za chwilę lub skróć opis.",
     fb_btn: "Zgłoś uwagę",
     fb_kicker: "WERSJA TESTOWA",
     fb_title: "Zgłoś uwagę",
@@ -140,6 +149,14 @@ const UI_TRANSLATIONS = {
     share_download: "Download report file",
     share_copy: "Copy link",
     test_badge: "Test version",
+    ai_code_label: "AI analysis access code (from the author)",
+    ai_code_hint: "Without a code a simplified local analysis runs in your browser (no patient sheet). Send only anonymised data to the AI.",
+    ai_remaining: "Code accepted. Remaining today: {n} of {m} AI analyses. Send only anonymised data to the AI.",
+    ai_err_bad_code: "Invalid access code. Check it, or clear it to use the local analysis.",
+    ai_err_limit: "Today's AI analysis limit has been used ({m}). Clear the code to use the local analysis, or try tomorrow.",
+    ai_err_network: "Cannot reach the AI engine. Check your connection, or clear the code to use the local analysis.",
+    ai_err_image: "The image is too large or in an unsupported format (JPG, PNG, WEBP, max 4 MB).",
+    ai_err_upstream: "The AI engine did not return a valid answer. Try again shortly or shorten the description.",
     fb_btn: "Send feedback",
     fb_kicker: "TEST VERSION",
     fb_title: "Send feedback",
@@ -350,6 +367,7 @@ class ClinicalGeneticsWorkspace {
       reader.readAsDataURL(file);
     });
 
+    document.getElementById('ai-code-input')?.addEventListener('change', () => this.refreshAiBox());
     document.getElementById('btn-run-case-analysis')?.addEventListener('click', () => {
       this.handleAnalyzeCustomCase();
     });
@@ -682,6 +700,33 @@ class ClinicalGeneticsWorkspace {
 
   openCaseModal() {
     document.getElementById('case-modal')?.classList.remove('hidden');
+    this.refreshAiBox();
+  }
+
+  // Permanent AI engine (proxy with access code) — shows the field and today's remaining analyses
+  async refreshAiBox() {
+    const box = document.getElementById('gc-ai-box');
+    const input = document.getElementById('ai-code-input');
+    const status = document.getElementById('ai-code-status');
+    if (!box || !input || !status) return;
+    box.hidden = !aiProxyEnabled();
+    if (box.hidden) return;
+    if (!input.value) { try { input.value = localStorage.getItem(AI_CODE_KEY) || ''; } catch (e) { /* storage blocked */ } }
+    const dict = UI_TRANSLATIONS[this.lang];
+    const code = input.value.trim();
+    if (!code) { status.textContent = dict.ai_code_hint; status.classList.remove('is-warn'); return; }
+    const info = await aiRemaining(code);
+    if (!info) { status.textContent = dict.ai_code_hint; return; }
+    if (info.error === 'bad_code') { status.textContent = dict.ai_err_bad_code; status.classList.add('is-warn'); return; }
+    status.classList.toggle('is-warn', info.remaining <= 0);
+    status.textContent = (info.remaining > 0 ? dict.ai_remaining : dict.ai_err_limit)
+      .replace('{n}', info.remaining).replace('{m}', info.limit);
+  }
+
+  aiErrorMessage(err) {
+    const dict = UI_TRANSLATIONS[this.lang];
+    const map = { bad_code: dict.ai_err_bad_code, limit: dict.ai_err_limit, network: dict.ai_err_network, image: dict.ai_err_image };
+    return (map[err.code] || dict.ai_err_upstream).replace('{n}', 0).replace('{m}', err.limit ?? '');
   }
 
   closeCaseModal() {
@@ -690,11 +735,11 @@ class ClinicalGeneticsWorkspace {
 
   async handleAnalyzeCustomCase() {
     const textarea = document.getElementById('custom-case-textarea');
-    const apiKeyInput = document.getElementById('gemini-api-key-input');
+    const codeInput = document.getElementById('ai-code-input');
     const runBtnLabel = document.getElementById('btn-run-case-label');
 
     const rawText = textarea?.value?.trim() || '';
-    const apiKey = apiKeyInput?.value?.trim() || '';
+    const accessCode = aiProxyEnabled() ? (codeInput?.value?.trim() || '') : '';
 
     const errEl = document.getElementById('gc-case-error');
     if (errEl) errEl.hidden = true;
@@ -717,14 +762,22 @@ class ClinicalGeneticsWorkspace {
         text: rawText,
         imageBase64: this.uploadedImageBase64,
         imageMimeType: this.uploadedImageMimeType,
-        apiKey,
+        accessCode,
         lang: this.lang
       });
+      if (accessCode) { try { localStorage.setItem(AI_CODE_KEY, accessCode); } catch (e) { /* storage blocked */ } }
       this.closeCaseModal();
       if (this.onCaseAnalyzed) this.onCaseAnalyzed(analyzedCase);
       else this.loadCase(sanitizeUntrustedCase(analyzedCase), true);
     } catch (err) {
       console.error('Case analysis fallback:', err);
+      if (err instanceof AiProxyError) {
+        const el = document.getElementById('gc-case-error');
+        if (el) { el.textContent = this.aiErrorMessage(err); el.hidden = false; }
+        if (err.code === 'bad_code') { try { localStorage.removeItem(AI_CODE_KEY); } catch (e) { /* storage blocked */ } }
+        this.refreshAiBox();
+        return;
+      }
       if (this.role) {
         this.showCaseError?.();
         return;

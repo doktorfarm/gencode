@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="robots" content="noindex, nofollow">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://esm.sh https://generativelanguage.googleapis.com; object-src 'none'; base-uri 'self'; form-action 'none'">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://esm.sh; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://esm.sh https://generativelanguage.googleapis.com https://*.workers.dev; object-src 'none'; base-uri 'self'; form-action 'none'">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>GenCode® Workspace</title>
   <meta name="theme-color" content="#0B1226">
@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css?v=gencode9" />
-  <link rel="stylesheet" href="./theme-landing.css?v=7" />
+  <link rel="stylesheet" href="./theme-landing.css?v=8" />
 </head>
 <body class="mydna-body" data-scroll-dir="down">
   <!-- Top Scroll Progress Bar -->
@@ -1028,11 +1028,10 @@
           </label>
           <textarea id="custom-case-textarea" class="form-textarea" placeholder="Wklej treść zadania lub opis pacjenta, np.: Pacjentka 34 l., trzy poronienia samoistne, lub opis rodziny z chorobą monogenową / wariantem HGVS..."></textarea>
 
-          <div style="margin-top: 12px;">
-            <label class="form-label" for="gemini-api-key-input">
-              Opcjonalny klucz Gemini API (dla analizy z modelem gemini-3.8-flash; bez klucza działa deterministyczny silnik reguł klinicznych)
-            </label>
-            <input id="gemini-api-key-input" type="password" class="form-input" placeholder="AIzaSy... (opcjonalnie)" autocomplete="off" spellcheck="false">
+          <div class="gc-ai-box" id="gc-ai-box" hidden>
+            <label class="form-label" for="ai-code-input" data-i18n="ai_code_label">Kod dostępu do analizy AI (otrzymany od autora)</label>
+            <input id="ai-code-input" type="password" class="form-input" autocomplete="off" spellcheck="false" maxlength="80" aria-describedby="ai-code-status">
+            <small id="ai-code-status" class="gc-ai-status" aria-live="polite" data-i18n="ai_code_hint">Bez kodu działa uproszczona analiza lokalna w przeglądarce (bez karty dla pacjenta). Do AI wysyłaj tylko dane zanonimizowane.</small>
           </div>
         </div>
 
@@ -1074,7 +1073,7 @@
   </button>
 
   <script src="./js/ui-enhancements.js?v=6" defer></script>
-  <script type="module" src="./js/app.js?v=gencode16"></script>
+  <script type="module" src="./js/app.js?v=gencode17"></script>
   <!-- Share report with patient -->
   <div id="share-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="share-modal-title">
     <div class="modal-dialog gc-share-dialog">

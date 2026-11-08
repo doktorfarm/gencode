@@ -3,11 +3,60 @@
  * Generates both a Simple Patient Report and an Extended Specialist Doctor Report.
  */
 
-export async function analyzeClinicalCase({ text, imageBase64, imageMimeType, apiKey, lang = "pl" }) {
+import { AI_PROXY_URL } from './ai-config.js?v=1';
+
+export const aiProxyEnabled = () => Boolean(AI_PROXY_URL);
+
+export class AiProxyError extends Error {
+  constructor(code, info = {}) { super(code); this.code = code; Object.assign(this, info); }
+}
+
+export async function analyzeClinicalCase({ text, imageBase64, imageMimeType, apiKey, accessCode, lang = "pl" }) {
+  if (accessCode && AI_PROXY_URL) {
+    return await analyzeWithProxy({ text, imageBase64, imageMimeType, accessCode: accessCode.trim() });
+  }
   if (apiKey && apiKey.trim().length > 10) {
     return await analyzeWithGeminiInteractions({ text, imageBase64, imageMimeType, apiKey: apiKey.trim() });
   }
   return analyzeOfflineGeneralGenetics({ text, lang });
+}
+
+/** Remaining AI analyses today for an access code (null when unknown). */
+export async function aiRemaining(accessCode) {
+  if (!AI_PROXY_URL || !accessCode) return null;
+  try {
+    const r = await fetch(AI_PROXY_URL.replace(/\/$/, '') + '/status', { method: 'POST', headers: { 'X-Access-Code': accessCode.trim() } });
+    if (r.status === 401) return { error: 'bad_code' };
+    const j = await r.json();
+    return { remaining: j.remaining, limit: j.limit };
+  } catch (e) { return null; }
+}
+
+async function analyzeWithProxy({ text, imageBase64, imageMimeType, accessCode }) {
+  let r;
+  try {
+    r = await fetch(AI_PROXY_URL.replace(/\/$/, '') + '/analyze', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Access-Code': accessCode },
+      body: JSON.stringify({ text, imageBase64: imageBase64 || '', imageMimeType: imageMimeType || '' })
+    });
+  } catch (e) {
+    throw new AiProxyError('network');
+  }
+  let j = {};
+  try { j = await r.json(); } catch (e) { /* non-JSON */ }
+  if (!r.ok) throw new AiProxyError(j.error || 'upstream', { remaining: j.remaining, limit: j.limit });
+  const cleaned = String(j.output_text || '').replace(/^```json\s*/i, '').replace(/```\s*$/i, '').trim();
+  let parsed;
+  try { parsed = JSON.parse(cleaned); } catch (e) { throw new AiProxyError('bad_output', { remaining: j.remaining }); }
+  parsed.id = "custom_" + Date.now();
+  parsed.questions = {
+    q1: { pl: "1. Rodowód kliniczny", en: "1. Clinical Pedigree" },
+    q2: { pl: "2. Rozpoznanie genetyczne i mechanizm dziedziczenia", en: "2. Genetic Diagnosis & Inheritance Mechanism" },
+    q3: { pl: "3. Postępowanie diagnostyczne u członków rodziny", en: "3. Family Diagnostic Management" }
+  };
+  parsed._aiRemaining = j.remaining;
+  return parsed;
 }
 
 async function analyzeWithGeminiInteractions({ text, imageBase64, imageMimeType, apiKey }) {
